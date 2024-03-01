@@ -18,6 +18,12 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[normalize-space()='Login']")
     WebElement loginButton;
 
+    @FindBy(css = "p[class='logo my-auto navbar-brand']")
+    WebElement logo;
+
+    @FindBy(css = "p.logo.my-auto.navbar-brand img[alt]")
+    WebElement logoAlt;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -60,5 +66,13 @@ public class HomePage extends BasePage {
 
     public void clickOnLogin() {
         loginButton.click();
+    }
+
+    public WebElement getLogo() {
+        return logo;
+    }
+
+    public String getLogoAlt() {
+        return logoAlt.getAttribute("alt");
     }
 }
