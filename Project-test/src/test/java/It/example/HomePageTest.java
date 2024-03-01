@@ -40,6 +40,11 @@ public class HomePageTest extends BasePageTest {
         Assertions.assertEquals(homeButtonText, homePage.getHomeButtonText());
         Assertions.assertEquals(registerButtonText, homePage.getRegisterButtonText());
         Assertions.assertEquals(loginButtonText, homePage.getLoginButtonText());
+
+        homePage.clickOnNavButton();
+        Assertions.assertFalse(homePage.getHomeButton().isDisplayed());
+        Assertions.assertFalse(homePage.getRegisterButton().isDisplayed());
+        Assertions.assertFalse(homePage.getLoginButton().isDisplayed());
     }
 
     @Test
