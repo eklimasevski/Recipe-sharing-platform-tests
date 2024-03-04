@@ -3,10 +3,15 @@ package It.example;
 import org.example.HomePage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
+
 
 public class HomePageTest extends BasePageTest {
     HomePage homePage;
+
+
 
     @Test
     public void smallNavBarTest() {
@@ -94,4 +99,22 @@ public class HomePageTest extends BasePageTest {
         Assertions.assertEquals(registerButtonText, homePage.getRegisterButtonText());
         Assertions.assertEquals(loginButtonText, homePage.getLoginButtonText());
     }
-}
+
+
+
+
+
+    @Test
+    public void footerTest() {
+        homePage = new HomePage(driver);
+
+        String expected = "http://localhost:5173/";
+
+
+
+            WebElement contactEmailElement = driver.findElement(By.cssSelector(".contact-email"));
+            contactEmailElement.click();
+            String actualLoginUrl = driver.getCurrentUrl();
+            Assertions.assertEquals(expected, actualLoginUrl);
+        }
+    }
