@@ -10,13 +10,13 @@ public class HomePage extends BasePage {
     WebElement navButton;
 
     @FindBy(xpath = "//a[normalize-space()='Home']")
-    WebElement homeButton;
+    WebElement homeButtonInNav;
 
     @FindBy(xpath = "//a[normalize-space()='Register']")
-    WebElement registerButton;
+    WebElement registerButtonInNav;
 
     @FindBy(xpath = "//a[normalize-space()='Login']")
-    WebElement loginButton;
+    WebElement loginButtonInNav;
 
     @FindBy(css = "p[class='logo my-auto navbar-brand']")
     WebElement logo;
@@ -26,6 +26,15 @@ public class HomePage extends BasePage {
 
     @FindBy(css = ".contact-email")
     WebElement contactEmailElement;
+
+    @FindBy(id = "email")
+    WebElement emailInput;
+
+    @FindBy(id = "password")
+    WebElement passwordInput;
+
+    @FindBy(css = "form > .btn.btn-primary")
+    WebElement loginButton;
 
     public WebElement getContactEmailElement() {
         return contactEmailElement;
@@ -40,39 +49,39 @@ public class HomePage extends BasePage {
     }
 
     public String getHomeButtonText() {
-        return homeButton.getText();
+        return homeButtonInNav.getText();
     }
 
     public String getRegisterButtonText() {
-        return registerButton.getText();
+        return registerButtonInNav.getText();
     }
 
     public String getLoginButtonText() {
-        return loginButton.getText();
+        return loginButtonInNav.getText();
     }
 
-    public WebElement getHomeButton() {
-        return homeButton;
+    public WebElement getHomeButtonInNav() {
+        return homeButtonInNav;
     }
 
-    public WebElement getRegisterButton() {
-        return registerButton;
+    public WebElement getRegisterButtonInNav() {
+        return registerButtonInNav;
     }
 
-    public WebElement getLoginButton() {
-        return loginButton;
+    public WebElement getLoginButtonInNav() {
+        return loginButtonInNav;
     }
 
     public void clickOnHome() {
-        homeButton.click();
+        homeButtonInNav.click();
     }
 
     public void clickOnRegister() {
-        registerButton.click();
+        registerButtonInNav.click();
     }
 
     public void clickOnLogin() {
-        loginButton.click();
+        loginButtonInNav.click();
     }
 
     public WebElement getLogo() {
@@ -81,5 +90,16 @@ public class HomePage extends BasePage {
 
     public String getLogoAlt() {
         return logoAlt.getAttribute("alt");
+    }
+
+    public void enterEmailInLogin(String email){
+        emailInput.sendKeys(email);
+    }
+    public void enterPasswordInlogin(String password){
+        passwordInput.sendKeys(password);
+    }
+
+    public void clickButtonToLogin(){
+        loginButton.click();
     }
 }

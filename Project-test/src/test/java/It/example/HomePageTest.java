@@ -15,7 +15,7 @@ public class HomePageTest extends BasePageTest {
     @Test
     public void smallNavBarTest() {
         driver.manage().window().setSize(new Dimension(990, 642));
-git
+
         // Linkas, į kuri nukreipiama po mygtuko paspaudimo.
         String expectedLoginUrl = "http://localhost:5173/login";
         String expectedRegisterUrl = "http://localhost:5173/register";
@@ -33,9 +33,9 @@ git
 
         // Tikrina ar atsiranda nav mygtukai po "hamburger" paspaudimo.
         homePage.clickOnNavButton();
-        Assertions.assertTrue(homePage.getHomeButton().isDisplayed());
-        Assertions.assertTrue(homePage.getRegisterButton().isDisplayed());
-        Assertions.assertTrue(homePage.getLoginButton().isDisplayed());
+        Assertions.assertTrue(homePage.getHomeButtonInNav().isDisplayed());
+        Assertions.assertTrue(homePage.getRegisterButtonInNav().isDisplayed());
+        Assertions.assertTrue(homePage.getLoginButtonInNav().isDisplayed());
 
         // Tikrina, ar mygtukas mus nuvedė į kitą puslapį.
         homePage.clickOnHome();
@@ -59,9 +59,9 @@ git
 
         // Tikrina, ar po "hamburger" meniu uždarymo mygtukai dingo.
         homePage.clickOnNavButton();
-        Assertions.assertFalse(homePage.getHomeButton().isDisplayed());
-        Assertions.assertFalse(homePage.getRegisterButton().isDisplayed());
-        Assertions.assertFalse(homePage.getLoginButton().isDisplayed());
+        Assertions.assertFalse(homePage.getHomeButtonInNav().isDisplayed());
+        Assertions.assertFalse(homePage.getRegisterButtonInNav().isDisplayed());
+        Assertions.assertFalse(homePage.getLoginButtonInNav().isDisplayed());
 
         // Tikrina ar yra logotipas.
         Assertions.assertTrue(homePage.getLogo().isDisplayed());
@@ -82,9 +82,9 @@ git
         String registerButtonText = "Register";
         String loginButtonText = "Login";
 
-        Assertions.assertTrue(homePage.getHomeButton().isDisplayed());
-        Assertions.assertTrue(homePage.getRegisterButton().isDisplayed());
-        Assertions.assertTrue(homePage.getLoginButton().isDisplayed());
+        Assertions.assertTrue(homePage.getHomeButtonInNav().isDisplayed());
+        Assertions.assertTrue(homePage.getRegisterButtonInNav().isDisplayed());
+        Assertions.assertTrue(homePage.getLoginButtonInNav().isDisplayed());
 
         homePage.clickOnHome();
         String actualHomeUrl = driver.getCurrentUrl();
