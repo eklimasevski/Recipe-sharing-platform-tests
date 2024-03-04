@@ -15,9 +15,11 @@ public class HomePageTest extends BasePageTest {
     @Test
     public void smallNavBarTest() {
         driver.manage().window().setSize(new Dimension(990, 642));
-
+git
         // Linkas, į kuri nukreipiama po mygtuko paspaudimo.
-        String expected = "http://localhost:5173/#";
+        String expectedLoginUrl = "http://localhost:5173/login";
+        String expectedRegisterUrl = "http://localhost:5173/register";
+        String expectedHomeUrl = "http://localhost:5173/";
 
         // Mygtuku tekstas.
         String homeButtonText = "Home";
@@ -37,18 +39,18 @@ public class HomePageTest extends BasePageTest {
 
         // Tikrina, ar mygtukas mus nuvedė į kitą puslapį.
         homePage.clickOnHome();
-        String actualHomeUrl = driver.getCurrentUrl();
-        Assertions.assertEquals(expected, actualHomeUrl);
+        String actualUrl = driver.getCurrentUrl();
+        Assertions.assertEquals(expectedHomeUrl, actualUrl);
 
         // Tikrina, ar mygtukas mus nuvedė į kitą puslapį.
         homePage.clickOnRegister();
         String actualRegisterUrl = driver.getCurrentUrl();
-        Assertions.assertEquals(expected, actualRegisterUrl);
+        Assertions.assertEquals(expectedRegisterUrl, actualRegisterUrl);
 
         // Tikrina, ar mygtukas mus nuvedė į kitą puslapį.
         homePage.clickOnLogin();
         String actualLoginUrl = driver.getCurrentUrl();
-        Assertions.assertEquals(expected, actualLoginUrl);
+        Assertions.assertEquals(expectedLoginUrl, actualLoginUrl);
 
         // Tikrina ar mygtuku tekstas yra toks koks turi būti
         Assertions.assertEquals(homeButtonText, homePage.getHomeButtonText());
@@ -72,7 +74,9 @@ public class HomePageTest extends BasePageTest {
 
         homePage = new HomePage(driver);
 
-        String expected = "http://localhost:5173/#";
+        String expectedLoginUrl = "http://localhost:5173/login";
+        String expectedRegisterUrl = "http://localhost:5173/register";
+        String expectedHomeUrl = "http://localhost:5173/";
 
         String homeButtonText = "Home";
         String registerButtonText = "Register";
@@ -84,15 +88,15 @@ public class HomePageTest extends BasePageTest {
 
         homePage.clickOnHome();
         String actualHomeUrl = driver.getCurrentUrl();
-        Assertions.assertEquals(expected, actualHomeUrl);
+        Assertions.assertEquals(expectedHomeUrl, actualHomeUrl);
 
         homePage.clickOnRegister();
         String actualRegisterUrl = driver.getCurrentUrl();
-        Assertions.assertEquals(expected, actualRegisterUrl);
+        Assertions.assertEquals(expectedRegisterUrl, actualRegisterUrl);
 
         homePage.clickOnLogin();
         String actualLoginUrl = driver.getCurrentUrl();
-        Assertions.assertEquals(expected, actualLoginUrl);
+        Assertions.assertEquals(expectedLoginUrl, actualLoginUrl);
 
         Assertions.assertEquals(homeButtonText, homePage.getHomeButtonText());
         Assertions.assertEquals(registerButtonText, homePage.getRegisterButtonText());
