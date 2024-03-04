@@ -24,6 +24,13 @@ public class HomePage extends BasePage {
     @FindBy(css = "p.logo.my-auto.navbar-brand img[alt]")
     WebElement logoAlt;
 
+    @FindBy(css = ".contact-email")
+    WebElement contactEmailElement;
+
+    public WebElement getContactEmailElement() {
+        return contactEmailElement;
+    }
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
