@@ -117,5 +117,21 @@ public class HomePageTest extends BasePageTest {
         //Pagal mane po paspaudimo ant email url nesikecia, todel testas realiai nieko netikrina
         String actualLoginUrl = driver.getCurrentUrl();
         Assertions.assertEquals(expected, actualLoginUrl);
+
+        WebElement phoneNumberElement = driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(4)"));
+        WebElement addressElement = driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(2)"));
+
+
+        String actualPhoneNumber = phoneNumberElement.getText();
+        String actualAddress = addressElement.getText();
+
+
+        String expectedPhoneNumber = "+370 5 269 7455";
+        String expectedAddress = "Trinapolio g. 2, Vilnius";
+
+
+        Assertions.assertEquals(expectedPhoneNumber, actualPhoneNumber, "Phone numbers do not match");
+        Assertions.assertEquals(expectedAddress, actualAddress, "Addresses do not match");
+
     }
 }
