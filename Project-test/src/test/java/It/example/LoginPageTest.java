@@ -1,28 +1,26 @@
 package It.example;
 
-import org.example.HomePage;
+import org.example.LoginPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class LoginPageTest extends BasePageTest {
 
-    HomePage homePage;
+    LoginPage loginPage;
 
     @ParameterizedTest
     @CsvFileSource(resources = "/WrongPasswordInputs.csv")
     void wrongPasswordInputsTest(String input) {
 
-        homePage = new HomePage(driver);
+        loginPage = new LoginPage(driver);
 
-        homePage.clickOnLogin();
-        homePage.enterEmailInLogin("Tetukas123@gmail.com");
-        homePage.enterPasswordInlogin(input);
-        homePage.clickButtonToLogin();
+        loginPage.clickOnLoginButtonInNav();
+        loginPage.enterEmail("Tetukas123@gmail.com");
+        loginPage.enterPassword(input);
+        loginPage.clickButtonToLogin();
 
-        String errorMessage = homePage.loginPagePasswordInputErrorMessage();
+        String errorMessage = loginPage.passwordInputErrorMessageText();
 
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }
@@ -31,14 +29,14 @@ public class LoginPageTest extends BasePageTest {
     @CsvFileSource(resources = "/WrongEmailInputs.csv")
     void wrongEmailInputsTest(String input) {
 
-        homePage = new HomePage(driver);
+        loginPage = new LoginPage(driver);
 
-        homePage.clickOnLogin();
-        homePage.enterEmailInLogin(input);
-        homePage.enterPasswordInlogin("Testukas123!");
-        homePage.clickButtonToLogin();
+        loginPage.clickOnLoginButtonInNav();
+        loginPage.enterEmail(input);
+        loginPage.enterPassword("Testukas123!");
+        loginPage.clickButtonToLogin();
 
-        String errorMessage = homePage.loginPageEmailInputErrorMessage();
+        String errorMessage = loginPage.emailInputErrorMessageText();
 
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }

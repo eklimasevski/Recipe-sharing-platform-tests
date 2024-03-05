@@ -27,21 +27,6 @@ public class HomePage extends BasePage {
     @FindBy(css = ".contact-email")
     WebElement contactEmailElement;
 
-    @FindBy(id = "email")
-    WebElement emailInput;
-
-    @FindBy(id = "password")
-    WebElement passwordInput;
-
-    @FindBy(css = "form > .btn.btn-primary")
-    WebElement loginButton;
-
-    @FindBy(css = "div:nth-of-type(1) > .invalid-feedback")
-    WebElement loginEmailInputErrorMessage;
-
-    @FindBy(css = "div:nth-of-type(2) > .invalid-feedback")
-    WebElement loginPasswordInputErrorMessage;
-
     public WebElement getContactEmailElement() {
         return contactEmailElement;
     }
@@ -98,22 +83,4 @@ public class HomePage extends BasePage {
         return logoAlt.getAttribute("alt");
     }
 
-    public void enterEmailInLogin(String email){
-        emailInput.sendKeys(email);
-    }
-    public void enterPasswordInlogin(String password){
-        passwordInput.sendKeys(password);
-    }
-
-    public void clickButtonToLogin(){
-        loginButton.click();
-    }
-
-    public String loginPageEmailInputErrorMessage(){
-        return loginEmailInputErrorMessage.getText();
-    }
-
-    public String loginPagePasswordInputErrorMessage(){
-        return loginPasswordInputErrorMessage.getText();
-    }
 }
