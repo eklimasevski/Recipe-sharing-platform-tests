@@ -1,18 +1,20 @@
 package It.example;
 
+import com.beust.jcommander.Parameters;
 import dev.failsafe.internal.util.Assert;
 import org.example.HomePage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class LoginPageTest extends BasePageTest{
+public class LoginPageTest extends BasePageTest {
 
     HomePage homePage;
 
     @ParameterizedTest
-    @ValueSource(strings = {"1234", "Test", " !@#5"})
-    void passwordInputTest(String input){
+    @CsvFileSource(resources = "/passwordInputs.csv")
+    void wrongPasswordInputsTest(String input) {
 
         homePage = new HomePage(driver);
 
@@ -23,12 +25,12 @@ public class LoginPageTest extends BasePageTest{
 
         String errorMessage = homePage.loginPagePasswordInputErrorMessage();
 
-        Assertions.assertNotNull(errorMessage,"Turėjo parodyti klaida");
+        Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Testukas123@@gmail.com", "Testukas123gmail.com","   @gmail.com", "!@#!", "Test","Testukas123@gmailcom"})
-    void emailInputTest(String input){
+    @CsvFileSource(resources = "/emailInputs.csv")
+    void wrongEmailInputsTest(String input) {
 
         homePage = new HomePage(driver);
 
@@ -39,6 +41,6 @@ public class LoginPageTest extends BasePageTest{
 
         String errorMessage = homePage.loginPageEmailInputErrorMessage();
 
-        Assertions.assertNotNull(errorMessage,"Turėjo parodyti klaida");
+        Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }
 }
