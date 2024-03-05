@@ -1,19 +1,18 @@
 package It.example;
 
-import com.beust.jcommander.Parameters;
-import dev.failsafe.internal.util.Assert;
 import org.example.HomePage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class LoginPageTest extends BasePageTest {
 
     HomePage homePage;
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/passwordInputs.csv")
+    @CsvFileSource(resources = "/WrongPasswordInputs.csv")
     void wrongPasswordInputsTest(String input) {
 
         homePage = new HomePage(driver);
@@ -29,7 +28,7 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/emailInputs.csv")
+    @CsvFileSource(resources = "/WrongEmailInputs.csv")
     void wrongEmailInputsTest(String input) {
 
         homePage = new HomePage(driver);
@@ -43,4 +42,5 @@ public class LoginPageTest extends BasePageTest {
 
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }
+
 }
