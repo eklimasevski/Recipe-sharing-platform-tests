@@ -110,15 +110,10 @@ public class HomePageTest extends BasePageTest {
 
         String expected = "http://localhost:5173/";
 
-
-// kai iesko webelemento sita eilute turetu buti HomePage.java, kad atitiktu POM
-        // tada kvieciam per homePage.(pavadinimas kaip pvz cia contacatEmailElement)
-
-//            WebElement contactEmailElement = driver.findElement(By.cssSelector(".contact-email"));
+//      WebElement contactEmailElement = driver.findElement(By.cssSelector(".contact-email"));
 
         homePage.getContactEmailElement().click();
 
-        //Pagal mane po paspaudimo ant email url nesikecia, todel testas realiai nieko netikrina
         String actualLoginUrl = driver.getCurrentUrl();
         Assertions.assertEquals(expected, actualLoginUrl);
 

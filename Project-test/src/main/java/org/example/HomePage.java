@@ -36,6 +36,12 @@ public class HomePage extends BasePage {
     @FindBy(css = "form > .btn.btn-primary")
     WebElement loginButton;
 
+    @FindBy(css = "div:nth-of-type(1) > .invalid-feedback")
+    WebElement loginEmailInputErrorMessage;
+
+    @FindBy(css = "div:nth-of-type(2) > .invalid-feedback")
+    WebElement loginPasswordInputErrorMessage;
+
     public WebElement getContactEmailElement() {
         return contactEmailElement;
     }
@@ -101,5 +107,13 @@ public class HomePage extends BasePage {
 
     public void clickButtonToLogin(){
         loginButton.click();
+    }
+
+    public String loginPageEmailInputErrorMessage(){
+        return loginEmailInputErrorMessage.getText();
+    }
+
+    public String loginPagePasswordInputErrorMessage(){
+        return loginPasswordInputErrorMessage.getText();
     }
 }
