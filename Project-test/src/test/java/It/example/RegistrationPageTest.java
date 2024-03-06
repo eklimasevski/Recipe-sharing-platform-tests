@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class RegistrationPageTest extends BasePageTest {
@@ -34,42 +35,51 @@ public class RegistrationPageTest extends BasePageTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/WrongEmails")
-    void emailInputstest(String input) {
+    void emailInputTest(String input) {
 
         registrationSteps(input, password, displayName, name, lastName, gender);
 
-        String errorMessage = registrationPage.emailInputErrorMessageText();
-        Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
+        WebElement errorMessage = registrationPage.emailInputErrorMessage();
+        Assertions.assertTrue(errorMessage.isDisplayed(), "Turėjo parodyti klaidą");
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/WrongPasswords")
-    void passwordInputsTest(String input) {
+    void passwordInputTest(String input) {
 
         registrationSteps(email, input, displayName, name, lastName, gender);
 
-        String errorMessage = registrationPage.passswordInputErrorMessageText();
-        Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
+        WebElement errorMessage = registrationPage.passwordInputErrorMessage();
+        Assertions.assertTrue(errorMessage.isDisplayed(), "Turėjo parodyti klaidą");
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/WrongDisplayNames")
-    void displayNameInputsTest(String input) {
+    void displayNameInputTest(String input) {
 
         registrationSteps(email, password, input, name, lastName, gender);
 
-        String errorMessage = registrationPage.displayNameInputErrorMessageText();
-        Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
+        WebElement errorMessage = registrationPage.displayNameInputErrorMessage();
+        Assertions.assertTrue(errorMessage.isDisplayed(), "Turėjo parodyti klaidą");
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/WrongFirstNames")
-    void firstNameInputsTest(String input) {
+    void firstNameInputTest(String input) {
 
         registrationSteps(email, password, displayName, input, lastName, gender);
 
-        String errorMessage = registrationPage.firstnameInpurerrorMessagetext();
-        Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
+        WebElement errorMessage = registrationPage.firstnameInpurerrorMessage();
+        Assertions.assertTrue(errorMessage.isDisplayed(), "Turėjo parodyti klaidą");
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/WrongLastNames")
+    void lastNameInputTest(String input) {
+        registrationSteps(email, password, displayName, name, input, gender);
+
+        WebElement errorMessage = registrationPage.lastNameInputErrorMessage();
+        Assertions.assertTrue(errorMessage.isDisplayed(), "Turėjo parodyti klaidą");
     }
 
     @Test

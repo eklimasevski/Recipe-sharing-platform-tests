@@ -7,24 +7,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 
-
 public class HomePageTest extends BasePageTest {
     HomePage homePage;
 
+    String expectedLoginUrl = "http://localhost:5173/login";
+    String expectedRegisterUrl = "http://localhost:5173/register";
+    String expectedHomeUrl = "http://localhost:5173/";
+
+    String homeButtonText = "Home";
+    String registerButtonText = "Register";
+    String loginButtonText = "Login";
 
     @Test
     public void smallNavBarTest() {
         driver.manage().window().setSize(new Dimension(990, 642));
-
-        // Linkas, į kuri nukreipiama po mygtuko paspaudimo.
-        String expectedLoginUrl = "http://localhost:5173/login";
-        String expectedRegisterUrl = "http://localhost:5173/register";
-        String expectedHomeUrl = "http://localhost:5173/";
-
-        // Mygtuku tekstas.
-        String homeButtonText = "Home";
-        String registerButtonText = "Register";
-        String loginButtonText = "Login";
 
         // Logotipo "alt" tekstas.
         String logoAlt = "Logo with words: Recipe Sharing Platform stacked on each other with pot with steam on top. ";
@@ -74,14 +70,6 @@ public class HomePageTest extends BasePageTest {
 
         homePage = new HomePage(driver);
 
-        String expectedLoginUrl = "http://localhost:5173/login";
-        String expectedRegisterUrl = "http://localhost:5173/register";
-        String expectedHomeUrl = "http://localhost:5173/";
-
-        String homeButtonText = "Home";
-        String registerButtonText = "Register";
-        String loginButtonText = "Login";
-
         Assertions.assertTrue(homePage.getHomeButtonInNav().isDisplayed());
         Assertions.assertTrue(homePage.getRegisterButtonInNav().isDisplayed());
         Assertions.assertTrue(homePage.getLoginButtonInNav().isDisplayed());
@@ -103,34 +91,31 @@ public class HomePageTest extends BasePageTest {
         Assertions.assertEquals(loginButtonText, homePage.getLoginButtonText());
     }
 
-
     @Test
     public void footerTest() {
         homePage = new HomePage(driver);
 
         String expected = "http://localhost:5173/";
 
-//      WebElement contactEmailElement = driver.findElement(By.cssSelector(".contact-email"));
+        //      WebElement contactEmailElement = driver.findElement(By.cssSelector(".contact-email"));
 
         homePage.getContactEmailElement().click();
 
         String actualLoginUrl = driver.getCurrentUrl();
         Assertions.assertEquals(expected, actualLoginUrl);
 
-        WebElement phoneNumberElement = driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(4)"));
-        WebElement addressElement = driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(2)"));
-
+        WebElement phoneNumberElement =
+                driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(4)"));
+        WebElement addressElement =
+                driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(2)"));
 
         String actualPhoneNumber = phoneNumberElement.getText();
         String actualAddress = addressElement.getText();
 
-
         String expectedPhoneNumber = "+370 5 269 7455";
         String expectedAddress = "Trinapolio g. 2, Vilnius";
 
-
         Assertions.assertEquals(expectedPhoneNumber, actualPhoneNumber, "Phone numbers do not match");
         Assertions.assertEquals(expectedAddress, actualAddress, "Addresses do not match");
-
     }
 }

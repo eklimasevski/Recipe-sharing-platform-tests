@@ -9,19 +9,22 @@ public class LoginPageTest extends BasePageTest {
 
     LoginPage loginPage;
 
+    public void loginPageTestSteps(String email, String password) {
+        loginPage = new LoginPage(driver);
+
+        loginPage.clickOnLoginButtonInNav();
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        loginPage.clickButtonToLogin();
+    }
+
     @ParameterizedTest
     @CsvFileSource(resources = "/WrongPasswords")
     void wrongPasswordInputsTest(String input) {
 
-        loginPage = new LoginPage(driver);
-
-        loginPage.clickOnLoginButtonInNav();
-        loginPage.enterEmail("Tetukas123@gmail.com");
-        loginPage.enterPassword(input);
-        loginPage.clickButtonToLogin();
+        loginPageTestSteps("Testukas123@gmail.com", input);
 
         String errorMessage = loginPage.passwordInputErrorMessageText();
-
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }
 
@@ -29,15 +32,9 @@ public class LoginPageTest extends BasePageTest {
     @CsvFileSource(resources = "/WrongEmails")
     void wrongEmailInputsTest(String input) {
 
-        loginPage = new LoginPage(driver);
-
-        loginPage.clickOnLoginButtonInNav();
-        loginPage.enterEmail(input);
-        loginPage.enterPassword("Testukas123!");
-        loginPage.clickButtonToLogin();
+        loginPageTestSteps(input, "Testukas123");
 
         String errorMessage = loginPage.emailInputErrorMessageText();
-
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }
 }

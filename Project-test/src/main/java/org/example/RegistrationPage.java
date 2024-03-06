@@ -44,6 +44,9 @@ public class RegistrationPage extends BasePage {
     @FindBy(css = "div:nth-of-type(5) > .invalid-feedback")
     WebElement firstNameErrorMessage;
 
+    @FindBy(css = "div:nth-of-type(6) > .invalid-feedback")
+    WebElement lastNameErrorMessage;
+
     public RegistrationPage(WebDriver driver) {
         super(driver);
     }
@@ -88,6 +91,10 @@ public class RegistrationPage extends BasePage {
         submitButton.click();
     }
 
+    public WebElement emailInputErrorMessage() {
+        return emailInputErrorMessage;
+    }
+
     public String emailInputErrorMessageText() {
         return emailInputErrorMessage.getText();
     }
@@ -96,11 +103,31 @@ public class RegistrationPage extends BasePage {
         return passwordInputErrorMessage.getText();
     }
 
+    public WebElement passwordInputErrorMessage() {
+        return passwordInputErrorMessage;
+    }
+
     public String displayNameInputErrorMessageText() {
         return displayNameErrorMessage.getText();
     }
 
+    public WebElement displayNameInputErrorMessage() {
+        return displayNameErrorMessage;
+    }
+
     public String firstnameInpurerrorMessagetext() {
         return firstNameErrorMessage.getText();
+    }
+
+    public WebElement firstnameInpurerrorMessage() {
+        return firstNameErrorMessage;
+    }
+
+    public String lastNameInputErrorMessageText() {
+        return lastNameErrorMessage.getText();
+    }
+
+    public WebElement lastNameInputErrorMessage() {
+        return lastNameErrorMessage;
     }
 }
