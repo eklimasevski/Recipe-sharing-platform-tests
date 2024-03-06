@@ -10,7 +10,7 @@ public class LoginPageTest extends BasePageTest {
     LoginPage loginPage;
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongPasswordInputs.csv")
+    @CsvFileSource(resources = "/WrongPasswords.csv")
     void wrongPasswordInputsTest(String input) {
 
         loginPage = new LoginPage(driver);
@@ -26,7 +26,7 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongEmailInputs.csv")
+    @CsvFileSource(resources = "/WrongEmails.csv")
     void wrongEmailInputsTest(String input) {
 
         loginPage = new LoginPage(driver);
@@ -40,5 +40,4 @@ public class LoginPageTest extends BasePageTest {
 
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
     }
-
 }
