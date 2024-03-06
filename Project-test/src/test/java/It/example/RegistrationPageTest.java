@@ -11,7 +11,7 @@ public class RegistrationPageTest extends BasePageTest {
     RegistrationPage registrationPage;
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongEmails.csv")
+    @CsvFileSource(resources = "/WrongEmails")
     void emailInputstest(String input) {
 
         String password = "Testukas123!";
@@ -40,7 +40,7 @@ public class RegistrationPageTest extends BasePageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongPasswords.csv")
+    @CsvFileSource(resources = "/WrongPasswords")
     void passwordInputsTest(String input) {
 
         String email = "Testukas123@gmail.com";
@@ -69,7 +69,7 @@ public class RegistrationPageTest extends BasePageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongDisplayNames.csv")
+    @CsvFileSource(resources = "/WrongDisplayNames")
     void displayNameInputsTest(String input) {
 
         String email = "Testukas123@gmail.com";
@@ -98,7 +98,7 @@ public class RegistrationPageTest extends BasePageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongFirstNames.csv")
+    @CsvFileSource(resources = "/WrongFirstNames")
     void firstNameInputsTest(String input) {
 
         String email = "Testukas123@gmail.com";

@@ -10,7 +10,7 @@ public class LoginPageTest extends BasePageTest {
     LoginPage loginPage;
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongPasswords.csv")
+    @CsvFileSource(resources = "/WrongPasswords")
     void wrongPasswordInputsTest(String input) {
 
         loginPage = new LoginPage(driver);
@@ -26,7 +26,7 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/WrongEmails.csv")
+    @CsvFileSource(resources = "/WrongEmails")
     void wrongEmailInputsTest(String input) {
 
         loginPage = new LoginPage(driver);
