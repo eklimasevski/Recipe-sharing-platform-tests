@@ -47,6 +47,9 @@ public class RegistrationPage extends BasePage {
     @FindBy(css = "div:nth-of-type(6) > .invalid-feedback")
     WebElement lastNameErrorMessage;
 
+    @FindBy(css = "div:nth-of-type(7) > .invalid-feedback")
+    WebElement genderErrorMessage;
+
     public RegistrationPage(WebDriver driver) {
         super(driver);
     }
@@ -129,5 +132,13 @@ public class RegistrationPage extends BasePage {
 
     public WebElement lastNameInputErrorMessage() {
         return lastNameErrorMessage;
+    }
+
+    public String genderErrorMessageText() {
+        return genderErrorMessage.getText();
+    }
+
+    public WebElement genderErrorMessage() {
+        return genderErrorMessage;
     }
 }

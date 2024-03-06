@@ -83,6 +83,17 @@ public class RegistrationPageTest extends BasePageTest {
     }
 
     @Test
+    public void genderSelectorTest() {
+        String expectedErrorMesage = "Gender field is required!";
+        registrationSteps(email, password, displayName, name, lastName, "Select...");
+
+        WebElement errorMessage = registrationPage.genderErrorMessage();
+        String actualErrorMessageText = registrationPage.genderErrorMessageText();
+        Assertions.assertTrue(errorMessage.isDisplayed());
+        Assertions.assertEquals(expectedErrorMesage, actualErrorMessageText);
+    }
+
+    @Test
     public void emailErrorMessageThenFieldEmptyTest() {
         String expectedError = "Email is required!";
 
@@ -99,6 +110,26 @@ public class RegistrationPageTest extends BasePageTest {
         registrationSteps("Test@@gmail.com", password, displayName, name, lastName, gender);
 
         String actualError = registrationPage.emailInputErrorMessageText();
+        Assertions.assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void passwordErrorMessageWithNumberOnly() {
+        String expectedError = "Password must contain at least one uppercase letter!";
+
+        registrationSteps(email, "123123", displayName, name, lastName, gender);
+
+        String actualError = registrationPage.passswordInputErrorMessageText();
+        Assertions.assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void passwordErrorMessageWithoutNumbers() {
+        String expectedError = "Password must contain at least one number!";
+
+        registrationSteps(email, "Testas", displayName, name, lastName, gender);
+
+        String actualError = registrationPage.passswordInputErrorMessageText();
         Assertions.assertEquals(expectedError, actualError);
     }
 }
