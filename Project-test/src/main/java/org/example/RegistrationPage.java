@@ -122,7 +122,7 @@ public class RegistrationPage extends BasePage {
         return firstNameErrorMessage.getText();
     }
 
-    public WebElement firstnameInpurerrorMessage() {
+    public WebElement firstnameInpurErrorMessage() {
         return firstNameErrorMessage;
     }
 

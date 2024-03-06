@@ -69,7 +69,7 @@ public class RegistrationPageTest extends BasePageTest {
 
         registrationSteps(email, password, displayName, input, lastName, gender);
 
-        WebElement errorMessage = registrationPage.firstnameInpurerrorMessage();
+        WebElement errorMessage = registrationPage.firstnameInpurErrorMessage();
         Assertions.assertTrue(errorMessage.isDisplayed(), "Turėjo parodyti klaidą");
     }
 
@@ -130,6 +130,46 @@ public class RegistrationPageTest extends BasePageTest {
         registrationSteps(email, "Testas", displayName, name, lastName, gender);
 
         String actualError = registrationPage.passswordInputErrorMessageText();
+        Assertions.assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void displayNameErrorMessageThenFieldEmpty() {
+        String expectedError = "Display name is required!";
+
+        registrationSteps(email, password, "", name, lastName, gender);
+
+        String actualError = registrationPage.displayNameInputErrorMessageText();
+        Assertions.assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void displayNameErrorMessageWithOffensiveWord() {
+        String expectedError = "Display name contains offensive words!";
+
+        registrationSteps(email, password, "damn", name, lastName, gender);
+
+        String actualError = registrationPage.displayNameInputErrorMessageText();
+        Assertions.assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void firstNameErrorMessageWithSpaces() {
+        String expectedError = "First name cannot have special symbols or spaces!";
+
+        registrationSteps(email, password, displayName, " Test", lastName, gender);
+
+        String actualError = registrationPage.firstnameInpurerrorMessagetext();
+        Assertions.assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void firstNameErrorMessageThenFirtLetterUppercase() {
+        String expectedError = "First name must start with an uppercase letter!";
+
+        registrationSteps(email, password, displayName, "test", lastName, gender);
+
+        String actualError = registrationPage.firstnameInpurerrorMessagetext();
         Assertions.assertEquals(expectedError, actualError);
     }
 }
