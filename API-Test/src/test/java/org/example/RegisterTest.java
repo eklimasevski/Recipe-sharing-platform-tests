@@ -20,12 +20,12 @@ public class RegisterTest {
         Response response = given().body(
                         """
                                 {
-                                    "displayName": "Test06",
-                                    "email": "Testukas06@gmail.com",
+                                    "displayName": "Test",
+                                    "email": "Testukas@gmail.com",
                                     "password": "aA1=ddr",
-                                    "firstName": "Testukass",
-                                    "lastName": "Testass",
-                                    "gender": "Female"
+                                    "firstName": "Testukas",
+                                    "lastName": "Testas",
+                                    "gender": "Male"
                                 }
                                 """)
                 .contentType(ContentType.JSON)
@@ -38,17 +38,17 @@ public class RegisterTest {
                 .statusCode(201)
                 .body(
                         "displayName",
-                        equalTo("Test06"),
+                        equalTo("Test"),
                         "email",
-                        equalTo("Testukas06@gmail.com"),
+                        equalTo("Testukas@gmail.com"),
                         "firstName",
-                        equalTo("Testukass"),
+                        equalTo("Testukas"),
                         "lastName",
-                        equalTo("Testass"),
+                        equalTo("Testas"),
                         "gender",
-                        equalTo("Female"),
+                        equalTo("Male"),
                         "username",
-                        equalTo("Testukas06@gmail.com"))
+                        equalTo("Testukas@gmail.com"))
                 .extract()
                 .response();
 
