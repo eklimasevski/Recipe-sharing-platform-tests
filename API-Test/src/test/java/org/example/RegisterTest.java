@@ -1,7 +1,7 @@
 package org.example;
 
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeEach;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -13,16 +13,15 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class RegisterTest {
-    String displayName = "Test";
 
     @Test
-    void whenPostUser_thenReturn201AndBody() {
+    void whenPostUser_thenReturn201AndBody() throws SQLException {
         //        given
-        given().body(
+        Response response = given().body(
                         """
                                 {
-                                    "displayName": "Test05",
-                                    "email": "Testukas05@gmail.com",
+                                    "displayName": "Test06",
+                                    "email": "Testukas06@gmail.com",
                                     "password": "aA1=ddr",
                                     "firstName": "Testukass",
                                     "lastName": "Testass",
@@ -39,9 +38,9 @@ public class RegisterTest {
                 .statusCode(201)
                 .body(
                         "displayName",
-                        equalTo("Test05"),
+                        equalTo("Test06"),
                         "email",
-                        equalTo("Testukas05@gmail.com"),
+                        equalTo("Testukas06@gmail.com"),
                         "firstName",
                         equalTo("Testukass"),
                         "lastName",
@@ -49,16 +48,21 @@ public class RegisterTest {
                         "gender",
                         equalTo("Female"),
                         "username",
-                        equalTo("Testukas05@gmail.com"));
+                        equalTo("Testukas06@gmail.com"))
+                .extract()
+                .response();
+
+        long id = response.jsonPath().getLong("id");
+
+        cleanUpDatabase(id);
     }
 
     @Test
     void whenPostAlreadyExistingUser_thenReturn200() {}
 
-    @BeforeEach
-    public void cleanUpDatabase() throws SQLException {
+    public void cleanUpDatabase(long id) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/rsp", "sa", "123456");
-        String deleteQuery = "DELETE FROM users";
+        String deleteQuery = "DELETE FROM users WHERE id = " + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
             preparedStatement.executeUpdate();
