@@ -159,7 +159,7 @@ public class RegistrationPageTest extends BasePageTest {
 
         registrationSteps(email, password, displayName, " Test", lastName, gender);
 
-        String actualError = registrationPage.firstnameInpurerrorMessagetext();
+        String actualError = registrationPage.firstNameInputErrorMessagetext();
         Assertions.assertEquals(expectedError, actualError);
     }
 
@@ -169,7 +169,7 @@ public class RegistrationPageTest extends BasePageTest {
 
         registrationSteps(email, password, displayName, "test", lastName, gender);
 
-        String actualError = registrationPage.firstnameInpurerrorMessagetext();
+        String actualError = registrationPage.firstNameInputErrorMessagetext();
         Assertions.assertEquals(expectedError, actualError);
     }
 }

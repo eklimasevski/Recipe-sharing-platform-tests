@@ -118,7 +118,7 @@ public class RegistrationPage extends BasePage {
         return displayNameErrorMessage;
     }
 
-    public String firstnameInpurerrorMessagetext() {
+    public String firstNameInputErrorMessagetext() {
         return firstNameErrorMessage.getText();
     }
 
