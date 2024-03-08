@@ -8,6 +8,7 @@ public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//a[normalize-space()='Login']")
     WebElement loginButtonInNav;
+
     @FindBy(css = "div:nth-of-type(2) > .invalid-feedback")
     WebElement passwordInputErrorMessage;
 
@@ -22,6 +23,12 @@ public class LoginPage extends BasePage {
 
     @FindBy(id = "password")
     WebElement passwordInput;
+
+    @FindBy(css = ".container.mt-5.mx-auto > div:nth-of-type(3)")
+    WebElement emailInLogin;
+
+    @FindBy(css = "div[role='alert']")
+    WebElement successfullyLoginAlert;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -49,5 +56,13 @@ public class LoginPage extends BasePage {
 
     public String passwordInputErrorMessageText() {
         return passwordInputErrorMessage.getText();
+    }
+
+    public String getEmailInLogin() {
+        return emailInLogin.getText();
+    }
+
+    public WebElement getSuccessfullyLoginAlert() {
+        return successfullyLoginAlert;
     }
 }
