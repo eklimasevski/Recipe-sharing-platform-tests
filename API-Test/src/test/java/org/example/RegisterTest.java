@@ -3,6 +3,8 @@ package org.example;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -211,6 +213,125 @@ public class RegisterTest {
                 .assertThat()
                 .statusCode(400)
                 .body("gender", equalTo("Gender must be Male, Female, or Other"));
+    }
+
+    @Test
+    void WhenPostUserWithLowercaseLettersInPassword_thenReturn400AndBody() {
+        given().body(
+                        """
+                {
+                "displayName": "Test1",
+                "email": "Testukas1@gmail.com",
+                "password": "abcda1!",
+                "firstName": "Tetukas",
+                "lastName": "Testas",
+                "gender": "Male"
+                }
+                """)
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/register")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("password", equalTo("Password must contain at least one uppercase letter"));
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/PasswordSymbols")
+    void passwordSymbolsTest(String input) throws SQLException {
+        Response response = given().body(
+                        """
+                {
+                "displayName": "Test",
+                "email": "Testukas@gmail.com",
+                "password": "%s",
+                "firstName": "Tetukas",
+                "lastName": "Testas",
+                "gender": "Male"
+                }
+                """
+                                .formatted(input))
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/register")
+                .then()
+                .assertThat()
+                .statusCode(201)
+                .extract()
+                .response();
+
+        long id = response.jsonPath().getLong("id");
+
+        cleanUpDatabase(id);
+    }
+
+    @Test
+    void WhenPostUserWithoutNumberInPassword_thenReturn400AndBody() {
+        given().body(
+                        """
+                {
+                "displayName": "Test1",
+                "email": "Testukas1@gmail.com",
+                "password": "Abcda!",
+                "firstName": "Tetukas",
+                "lastName": "Testas",
+                "gender": "Male"
+                }
+                """)
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/register")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("password", equalTo("Password must contain at least one digit"));
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/PasswordWithSpaces")
+    void WhenPostUserWithSpacesInPassword_thenReturn400AndBody(String input) {
+        given().body(
+                        """
+                {
+                "displayName": "Test1",
+                "email": "Testukas1@gmail.com",
+                "password": "%s",
+                "firstName": "Tetukas",
+                "lastName": "Testas",
+                "gender": "Male"
+                }
+                """
+                                .formatted(input))
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/register")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("password", equalTo("No whitespace allowed"));
+    }
+
+    @Test
+    void WhenPostUserWhenPasswordIsShorterThat6symbols_thenReturn400AndBody() {
+        given().body(
+                        """
+                {
+                "displayName": "Test1",
+                "email": "Testukas1@gmail.com",
+                "password": "Ab1!",
+                "firstName": "Tetukas",
+                "lastName": "Testas",
+                "gender": "Male"
+                }
+                """)
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/register")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("password", equalTo("Password must be at least 6 characters long"));
     }
 
     public void cleanUpDatabase(long id) throws SQLException {

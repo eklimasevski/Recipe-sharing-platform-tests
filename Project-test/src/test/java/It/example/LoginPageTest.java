@@ -49,6 +49,7 @@ public class LoginPageTest extends BasePageTest {
         String email = "Testukas1@gmail.com";
 
         loginPageTestSteps(email, "aA1=ddr");
+
         loginPage.clickButtonToLogin();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -59,5 +60,24 @@ public class LoginPageTest extends BasePageTest {
         Assertions.assertEquals(expectedUrl, actualUrl);
         Assertions.assertEquals(email, loginPage.getEmailInLogin().replace("Your email is: ", ""));
         Assertions.assertTrue(loginPage.getSuccessfullyLoginAlert().isDisplayed(), "Prisijungimo klaida");
+    }
+
+    @Test
+    void failedLoginTest() {
+        String exppectedErrorMessage = "Error: The email or password provided is incorrect.";
+
+        loginPageTestSteps("Testukas123@gmail.com", "Testukas123");
+        Assertions.assertEquals(exppectedErrorMessage, loginPage.incorrectPaswordOrEmailMessage());
+    }
+
+    @Test
+    void redirectToRegisterPageTest() {
+        String expectedUrl = "http://localhost:5173/register";
+
+        loginPage = new LoginPage(driver);
+        loginPage.clickOnLoginButtonInNav();
+        loginPage.clickToCreateAccount();
+
+        Assertions.assertEquals(expectedUrl, driver.getCurrentUrl());
     }
 }

@@ -1,7 +1,6 @@
 package org.example;
 
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -30,10 +29,12 @@ public class LoginTest {
                 .assertThat()
                 .statusCode(200)
                 .body(
-                        "displayName",
-                        equalTo("Test1"),
+                        "id",
+                        equalTo(97),
                         "email",
                         equalTo("Testukas1@gmail.com"),
+                        "displayName",
+                        equalTo("Test1"),
                         "firstName",
                         equalTo("Testukas"),
                         "lastName",
@@ -41,7 +42,9 @@ public class LoginTest {
                         "gender",
                         equalTo("Male"),
                         "username",
-                        equalTo("Testukas1@gmail.com"));
+                        equalTo("Testukas1@gmail.com"),
+                        "role",
+                        equalTo("ROLE_USER"));
     }
 
     @Test
@@ -62,9 +65,7 @@ public class LoginTest {
                 .then()
                 .assertThat()
                 .statusCode(401)
-                .body(
-                        "message",
-                        equalTo("The email or password provided is incorrect."));
+                .body("message", equalTo("The email or password provided is incorrect."));
     }
 
     @Test
@@ -85,8 +86,6 @@ public class LoginTest {
                 .then()
                 .assertThat()
                 .statusCode(401)
-                .body(
-                        "message",
-                        equalTo("The email or password provided is incorrect."));
+                .body("message", equalTo("The email or password provided is incorrect."));
     }
 }

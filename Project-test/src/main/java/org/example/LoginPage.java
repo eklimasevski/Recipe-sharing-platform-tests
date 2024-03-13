@@ -30,6 +30,12 @@ public class LoginPage extends BasePage {
     @FindBy(css = "div[role='alert']")
     WebElement successfullyLoginAlert;
 
+    @FindBy(className = "login")
+    WebElement loginPageErrorMessage;
+
+    @FindBy(className = "special-link")
+    WebElement createAccountButton;
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -64,5 +70,13 @@ public class LoginPage extends BasePage {
 
     public WebElement getSuccessfullyLoginAlert() {
         return successfullyLoginAlert;
+    }
+
+    public String incorrectPaswordOrEmailMessage() {
+        return loginPageErrorMessage.getText();
+    }
+
+    public void clickToCreateAccount() {
+        createAccountButton.click();
     }
 }
