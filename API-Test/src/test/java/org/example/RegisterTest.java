@@ -334,6 +334,30 @@ public class RegisterTest {
                 .body("password", equalTo("Password must be at least 6 characters long"));
     }
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "/OffensiveWords")
+    void whenPostUserWithOffensiveWord_thenReturn400AndBody(String input) throws SQLException {
+        given().body(
+                        """
+                {
+                "displayName": "%s",
+                "email": "Testukas@gmail.com",
+                "password": "Testukas123!",
+                "firstName": "Tetukas",
+                "lastName": "Testas",
+                "gender": "Male"
+                }
+                """
+                                .formatted(input))
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/register")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("displayName", equalTo("Display name cannot contain offensive words"));
+    }
+
     public void cleanUpDatabase(long id) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/rsp", "sa", "123456");
         String deleteQuery = "DELETE FROM users WHERE id = " + id;
