@@ -53,6 +53,12 @@ public class RegistrationPage extends BasePage {
     @FindBy(className = "navbar-toggler")
     WebElement hamburgerButton;
 
+    @FindBy(id = "exampleModalCenterTitle")
+    WebElement successfulyRegistrationMessage;
+
+    @FindBy(css = "div[role='document'] .btn.btn-primary")
+    WebElement successfulyRegistrationMessageCloseButton;
+
     public RegistrationPage(WebDriver driver) {
         super(driver);
     }
@@ -151,5 +157,13 @@ public class RegistrationPage extends BasePage {
 
     public WebElement getSubmitButton() {
         return submitButton;
+    }
+
+    public String getSuccessfulyRegistrationMessageText() {
+        return successfulyRegistrationMessage.getText();
+    }
+
+    public void successfulyRegistrationMessageCloseButtonClick() {
+        successfulyRegistrationMessage.click();
     }
 }

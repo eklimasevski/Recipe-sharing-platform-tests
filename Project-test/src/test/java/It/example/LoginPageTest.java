@@ -69,7 +69,7 @@ public class LoginPageTest extends BasePageTest {
     void failedLoginTest() {
         String exppectedErrorMessage = "Error: The email or password provided is incorrect.";
 
-        loginPageTestSteps(email, password);
+        loginPageTestSteps("email@gmail.com", password);
         Assertions.assertEquals(exppectedErrorMessage, loginPage.incorrectPaswordOrEmailMessage());
     }
 

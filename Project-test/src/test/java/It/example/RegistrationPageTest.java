@@ -183,7 +183,14 @@ public class RegistrationPageTest extends BasePageTest {
         driver.manage().window().setSize(new Dimension(375, 667));
         registrationPage = new RegistrationPage(driver);
 
+        String expected = "Registration Successful!";
+
         registrationPage.clickOnHamburgerButton();
         registrationSteps(email, password, displayName, name, lastName, gender);
+
+        String actual = registrationPage.getSuccessfulyRegistrationMessageText();
+        Assertions.assertEquals(expected, actual);
+
+        registrationPage.successfulyRegistrationMessageCloseButtonClick();
     }
 }
