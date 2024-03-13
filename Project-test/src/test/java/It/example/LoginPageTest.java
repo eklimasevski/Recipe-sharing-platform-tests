@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,6 +14,9 @@ import java.time.Duration;
 public class LoginPageTest extends BasePageTest {
 
     LoginPage loginPage;
+
+    String email = "Testukas123@gmail.com";
+    String password = "Testukas123!";
 
     public void loginPageTestSteps(String email, String password) {
         loginPage = new LoginPage(driver);
@@ -27,7 +31,7 @@ public class LoginPageTest extends BasePageTest {
     @CsvFileSource(resources = "/WrongPasswords")
     void wrongPasswordInputsTest(String input) {
 
-        loginPageTestSteps("Testukas123@gmail.com", input);
+        loginPageTestSteps(email, input);
 
         String errorMessage = loginPage.passwordInputErrorMessageText();
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
@@ -37,7 +41,7 @@ public class LoginPageTest extends BasePageTest {
     @CsvFileSource(resources = "/WrongEmails")
     void wrongEmailInputsTest(String input) {
 
-        loginPageTestSteps(input, "Testukas123");
+        loginPageTestSteps(input, password);
 
         String errorMessage = loginPage.emailInputErrorMessageText();
         Assertions.assertNotNull(errorMessage, "Turėjo parodyti klaidą");
@@ -46,9 +50,8 @@ public class LoginPageTest extends BasePageTest {
     @Test
     void successfulLoginTest() {
         String expectedUrl = "http://localhost:5173/login-successful";
-        String email = "Testukas1@gmail.com";
 
-        loginPageTestSteps(email, "aA1=ddr");
+        loginPageTestSteps(email, password);
 
         loginPage.clickButtonToLogin();
 
@@ -66,7 +69,7 @@ public class LoginPageTest extends BasePageTest {
     void failedLoginTest() {
         String exppectedErrorMessage = "Error: The email or password provided is incorrect.";
 
-        loginPageTestSteps("Testukas123@gmail.com", "Testukas123");
+        loginPageTestSteps(email, password);
         Assertions.assertEquals(exppectedErrorMessage, loginPage.incorrectPaswordOrEmailMessage());
     }
 
@@ -79,5 +82,24 @@ public class LoginPageTest extends BasePageTest {
         loginPage.clickToCreateAccount();
 
         Assertions.assertEquals(expectedUrl, driver.getCurrentUrl());
+    }
+
+    @Test
+    public void mobileVersionRegistrationTest() {
+        String expectedUrl = "http://localhost:5173/login-successful";
+        driver.manage().window().setSize(new Dimension(375, 667));
+        loginPage = new LoginPage(driver);
+
+        loginPage.clickOnHamburgerButton();
+        loginPageTestSteps(email, password);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlContains("/login-successful"));
+
+        String actualUrl = driver.getCurrentUrl();
+
+        Assertions.assertTrue(loginPage.getSuccessfullyLoginAlert().isDisplayed(), "Prisijungimo klaida");
+        Assertions.assertEquals(expectedUrl, actualUrl);
+        Assertions.assertEquals(email, loginPage.getEmailInLogin().replace("Your email is: ", ""));
     }
 }

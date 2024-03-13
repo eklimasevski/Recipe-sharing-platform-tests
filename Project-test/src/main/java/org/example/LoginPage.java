@@ -36,6 +36,9 @@ public class LoginPage extends BasePage {
     @FindBy(className = "special-link")
     WebElement createAccountButton;
 
+    @FindBy(className = "navbar-toggler")
+    WebElement hamburgerButton;
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -78,5 +81,9 @@ public class LoginPage extends BasePage {
 
     public void clickToCreateAccount() {
         createAccountButton.click();
+    }
+
+    public void clickOnHamburgerButton() {
+        hamburgerButton.click();
     }
 }

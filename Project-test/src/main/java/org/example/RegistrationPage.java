@@ -50,6 +50,9 @@ public class RegistrationPage extends BasePage {
     @FindBy(css = "div:nth-of-type(7) > .invalid-feedback")
     WebElement genderErrorMessage;
 
+    @FindBy(className = "navbar-toggler")
+    WebElement hamburgerButton;
+
     public RegistrationPage(WebDriver driver) {
         super(driver);
     }
@@ -140,5 +143,13 @@ public class RegistrationPage extends BasePage {
 
     public WebElement genderErrorMessage() {
         return genderErrorMessage;
+    }
+
+    public void clickOnHamburgerButton() {
+        hamburgerButton.click();
+    }
+
+    public WebElement getSubmitButton() {
+        return submitButton;
     }
 }
