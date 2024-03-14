@@ -1,5 +1,6 @@
 package org.example;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -161,6 +162,10 @@ public class RegistrationPage extends BasePage {
 
     public String getSuccessfulyRegistrationMessageText() {
         return successfulyRegistrationMessage.getText();
+    }
+
+    public WebElement getSuccessfulyRegistrationMessage() {
+        return successfulyRegistrationMessage;
     }
 
     public void successfulyRegistrationMessageCloseButtonClick() {

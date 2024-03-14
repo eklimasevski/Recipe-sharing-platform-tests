@@ -118,7 +118,5 @@ public class LoginPageTest extends BasePageTest {
 
         Assertions.assertEquals(expected, actual);
         Assertions.assertTrue(loginPage.passwordField().getAttribute("type").equals("text"));
-
-
     }
 }

@@ -9,10 +9,10 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//a[normalize-space()='Login']")
     WebElement loginButtonInNav;
 
-    @FindBy(css = "div:nth-of-type(2) > .invalid-feedback")
+    @FindBy(css = ".input-group > .invalid-feedback")
     WebElement passwordInputErrorMessage;
 
-    @FindBy(css = "div:nth-of-type(1) > .invalid-feedback")
+    @FindBy(css = "form > div:nth-of-type(1) > .invalid-feedback")
     WebElement emailInputErrorMessage;
 
     @FindBy(css = "form > .btn.btn-primary")
@@ -21,7 +21,7 @@ public class LoginPage extends BasePage {
     @FindBy(id = "email")
     WebElement emailInput;
 
-    @FindBy(id = "passwordInput")
+    @FindBy(id = "password")
     WebElement passwordInput;
 
     @FindBy(css = ".container.mt-5.mx-auto > div:nth-of-type(3)")
