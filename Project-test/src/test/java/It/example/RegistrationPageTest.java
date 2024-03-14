@@ -7,8 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 
 public class RegistrationPageTest extends BasePageTest {
     RegistrationPage registrationPage;
@@ -23,7 +21,6 @@ public class RegistrationPageTest extends BasePageTest {
             String email, String password, String displayName, String name, String lastName, String gender) {
 
         registrationPage = new RegistrationPage(driver);
-        Actions actions = new Actions(driver);
 
         registrationPage.clickRegistrationButtonInNav();
         registrationPage.enterEmail(email);
@@ -32,10 +29,26 @@ public class RegistrationPageTest extends BasePageTest {
         registrationPage.enterDisplayName(displayName);
         registrationPage.enterFirstName(name);
         registrationPage.enterLastName(lastName);
+        registrationPage.getGenderSelector(gender);
+        registrationPage.submitButtonClick();
+    }
 
-        Select select = new Select(registrationPage.getGenderSelector());
-        select.selectByVisibleText(gender);
-        actions.moveToElement(registrationPage.getSubmitButton()).click().perform();
+    public void registrationStepsForMobileVersion(
+            String email, String password, String displayName, String name, String lastName, String gender) {
+
+        driver.manage().window().setSize(new Dimension(375, 667));
+        registrationPage = new RegistrationPage(driver);
+
+        registrationPage.clickOnHamburgerButton();
+        registrationPage.clickRegistrationButtonInNav();
+        registrationPage.enterEmail(email);
+        registrationPage.enterPassword(password);
+        registrationPage.enterConfirmPassword(password);
+        registrationPage.enterDisplayName(displayName);
+        registrationPage.enterFirstName(name);
+        registrationPage.enterLastName(lastName);
+        registrationPage.getGenderSelector(gender);
+        registrationPage.submitButtonClick();
     }
 
     @ParameterizedTest
@@ -179,13 +192,9 @@ public class RegistrationPageTest extends BasePageTest {
     }
 
     @Test
-    public void mobileVersionRegistrationTest() {
-        driver.manage().window().setSize(new Dimension(375, 667));
-        registrationPage = new RegistrationPage(driver);
-
+    public void correctRegistrationTest() {
         String expected = "Registration Successful!";
 
-        registrationPage.clickOnHamburgerButton();
         registrationSteps(email, password, displayName, name, lastName, gender);
 
         WebElement getElement = registrationPage.getSuccessfulyRegistrationMessage();
@@ -195,10 +204,11 @@ public class RegistrationPageTest extends BasePageTest {
     }
 
     @Test
-    public void correctRegistrationTest() {
+    public void mobileVersionRegistrationTest() {
+
         String expected = "Registration Successful!";
 
-        registrationSteps(email, password, displayName, name, lastName, gender);
+        registrationStepsForMobileVersion(email, password, displayName, name, lastName, gender);
 
         WebElement getElement = registrationPage.getSuccessfulyRegistrationMessage();
         String actual = getElement.getText();

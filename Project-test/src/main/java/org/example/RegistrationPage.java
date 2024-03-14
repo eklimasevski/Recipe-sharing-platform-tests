@@ -3,8 +3,10 @@ package org.example;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -63,8 +65,9 @@ public class RegistrationPage extends BasePage {
         super(driver);
     }
 
-    public WebElement getGenderSelector() {
-        return genderSelector;
+    public void getGenderSelector(String gender) {
+        Select select = new Select(genderSelector);
+        select.selectByVisibleText(gender);
     }
 
     public void clickRegistrationButtonInNav() {
@@ -93,10 +96,6 @@ public class RegistrationPage extends BasePage {
 
     public void enterLastName(String lastName) {
         lastNameInput.sendKeys(lastName);
-    }
-
-    public void clickOnGenderSelector() {
-        genderSelector.click();
     }
 
     public void clickOnSubmitButton() {
@@ -155,8 +154,9 @@ public class RegistrationPage extends BasePage {
         hamburgerButton.click();
     }
 
-    public WebElement getSubmitButton() {
-        return submitButton;
+    public void submitButtonClick() {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(submitButton).click().perform();
     }
 
     public WebElement getSuccessfulyRegistrationMessage() {
