@@ -5,17 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class RegistrationPageTest extends BasePageTest {
     RegistrationPage registrationPage;
@@ -195,14 +188,21 @@ public class RegistrationPageTest extends BasePageTest {
         registrationPage.clickOnHamburgerButton();
         registrationSteps(email, password, displayName, name, lastName, gender);
 
+        WebElement getElement = registrationPage.getSuccessfulyRegistrationMessage();
+        String actual = getElement.getText();
 
-        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-//        String actual = registrationPage.getSuccessfulyRegistrationMessageText();
-
-       WebElement actual = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("exampleModalCenterTitle")));
         Assertions.assertEquals(expected, actual);
+    }
 
-        registrationPage.successfulyRegistrationMessageCloseButtonClick();
+    @Test
+    public void correctRegistrationTest() {
+        String expected = "Registration Successful!";
+
+        registrationSteps(email, password, displayName, name, lastName, gender);
+
+        WebElement getElement = registrationPage.getSuccessfulyRegistrationMessage();
+        String actual = getElement.getText();
+
+        Assertions.assertEquals(expected, actual);
     }
 }

@@ -4,6 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class RegistrationPage extends BasePage {
     @FindBy(linkText = "Register")
@@ -53,12 +58,6 @@ public class RegistrationPage extends BasePage {
 
     @FindBy(className = "navbar-toggler")
     WebElement hamburgerButton;
-
-    @FindBy(id = "exampleModalCenterTitle")
-    WebElement successfulyRegistrationMessage;
-
-    @FindBy(css = "div[role='document'] .btn.btn-primary")
-    WebElement successfulyRegistrationMessageCloseButton;
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -160,15 +159,8 @@ public class RegistrationPage extends BasePage {
         return submitButton;
     }
 
-    public String getSuccessfulyRegistrationMessageText() {
-        return successfulyRegistrationMessage.getText();
-    }
-
     public WebElement getSuccessfulyRegistrationMessage() {
-        return successfulyRegistrationMessage;
-    }
-
-    public void successfulyRegistrationMessageCloseButtonClick() {
-        successfulyRegistrationMessage.click();
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("exampleModalCenterTitle")));
     }
 }
