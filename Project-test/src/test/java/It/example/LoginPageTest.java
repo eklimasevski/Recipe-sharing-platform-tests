@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -101,5 +102,23 @@ public class LoginPageTest extends BasePageTest {
         Assertions.assertTrue(loginPage.getSuccessfullyLoginAlert().isDisplayed(), "Prisijungimo klaida");
         Assertions.assertEquals(expectedUrl, actualUrl);
         Assertions.assertEquals(email, loginPage.getEmailInLogin().replace("Your email is: ", ""));
+    }
+
+    @Test
+    public void showingPasswordTest() {
+        loginPage = new LoginPage(driver);
+
+        loginPage.clickOnLoginButtonInNav();
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        loginPage.clickOnShowPassword();
+
+        String actual = loginPage.getPasswordFieldValue();
+        String expected = password;
+
+        Assertions.assertEquals(expected, actual);
+        Assertions.assertTrue(loginPage.passwordField().getAttribute("type").equals("text"));
+
+
     }
 }

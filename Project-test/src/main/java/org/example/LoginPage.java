@@ -21,7 +21,7 @@ public class LoginPage extends BasePage {
     @FindBy(id = "email")
     WebElement emailInput;
 
-    @FindBy(id = "password")
+    @FindBy(id = "passwordInput")
     WebElement passwordInput;
 
     @FindBy(css = ".container.mt-5.mx-auto > div:nth-of-type(3)")
@@ -38,6 +38,8 @@ public class LoginPage extends BasePage {
 
     @FindBy(className = "navbar-toggler")
     WebElement hamburgerButton;
+    @FindBy(css = ".btn.btn-outline-secondary > svg")
+    WebElement showPassword;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -53,6 +55,11 @@ public class LoginPage extends BasePage {
 
     public void enterPassword(String password) {
         passwordInput.sendKeys(password);
+    }
+    public String getPasswordFieldValue(){return passwordInput.getAttribute("value");}
+
+    public WebElement passwordField(){
+        return passwordInput;
     }
 
     public void clickButtonToLogin() {
@@ -85,5 +92,9 @@ public class LoginPage extends BasePage {
 
     public void clickOnHamburgerButton() {
         hamburgerButton.click();
+    }
+
+    public void clickOnShowPassword(){
+        showPassword.click();
     }
 }
