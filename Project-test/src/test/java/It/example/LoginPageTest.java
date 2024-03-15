@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,8 +15,8 @@ public class LoginPageTest extends BasePageTest {
 
     LoginPage loginPage;
 
-    String email = "Testukas123@gmail.com";
-    String password = "Testukas123!";
+    String email = "Testukas1@gmail.com";
+    String password = "aA1=ddr";
 
     public void loginPageTestSteps(String email, String password) {
         loginPage = new LoginPage(driver);

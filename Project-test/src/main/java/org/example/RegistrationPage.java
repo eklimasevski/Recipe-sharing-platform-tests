@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Random;
 
 public class RegistrationPage extends BasePage {
     @FindBy(linkText = "Register")
@@ -76,6 +77,33 @@ public class RegistrationPage extends BasePage {
 
     public void enterEmail(String email) {
         emailInput.sendKeys(email);
+    }
+
+    public static String generateEmail() {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        String chars = "abcdefghijklmnopqrstuvwxyz";
+
+        for (int i = 0; i < 5; i++) {
+            char c = chars.charAt(random.nextInt(chars.length()));
+            sb.append(c);
+        }
+
+        String email = sb + "@gmail.com";
+        return email;
+    }
+
+    public static String generateDisplayName() {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        String chars = "abcdefghijklmnopqrstuvwxyz";
+
+        for (int i = 0; i < 5; i++) {
+            char c = chars.charAt(random.nextInt(chars.length()));
+            sb.append(c);
+        }
+        String displayName = sb.toString();
+        return displayName;
     }
 
     public void enterPassword(String password) {
@@ -162,5 +190,10 @@ public class RegistrationPage extends BasePage {
     public WebElement getSuccessfulyRegistrationMessage() {
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("exampleModalCenterTitle")));
+    }
+
+    public void waitUntilBodyLoad() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
     }
 }

@@ -91,11 +91,11 @@ public class RegisterTest {
                         """
                 {
                 "displayName": "Test1",
-                "email": "Testukas1@gmail.com",
+                "email": "Testukas11@gmail.com",
                 "password": "aA1=ddr",
                 "firstName": "Testukas",
-                "lastName":"Testas",
-                "gender":"Male"
+                "lastName": "Testas",
+                "gender": "Male"
                 }
                 """)
                 .contentType(ContentType.JSON)
@@ -112,7 +112,7 @@ public class RegisterTest {
         given().body(
                         """
                 {
-                "displayName": "Test1",
+                "displayName": "Test",
                 "email": "Testukas1@gmail.com",
                 "password": "aA1=ddr",
                 "firstName": "Testukas",
@@ -134,7 +134,7 @@ public class RegisterTest {
         given().body(
                         """
                 {
-                "displayName": "Test1",
+                "displayName": "Test",
                 "email": "Testukas1gmail.com",
                 "password": "aA1=ddr",
                 "firstName": "Testukas",
@@ -156,7 +156,7 @@ public class RegisterTest {
         given().body(
                         """
                 {
-                "displayName": "Test1",
+                "displayName": "Test",
                 "email": "Testukas1@gmail.com",
                 "password": "Abcda1",
                 "firstName": "Tetukas",
@@ -220,7 +220,7 @@ public class RegisterTest {
         given().body(
                         """
                 {
-                "displayName": "Test1",
+                "displayName": "Test",
                 "email": "Testukas1@gmail.com",
                 "password": "abcda1!",
                 "firstName": "Tetukas",
@@ -271,7 +271,7 @@ public class RegisterTest {
         given().body(
                         """
                 {
-                "displayName": "Test1",
+                "displayName": "Test",
                 "email": "Testukas1@gmail.com",
                 "password": "Abcda!",
                 "firstName": "Tetukas",

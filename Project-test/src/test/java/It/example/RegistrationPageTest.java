@@ -19,9 +19,9 @@ public class RegistrationPageTest extends BasePageTest {
 
     public void registrationSteps(
             String email, String password, String displayName, String name, String lastName, String gender) {
-
         registrationPage = new RegistrationPage(driver);
 
+        registrationPage.waitUntilBodyLoad();
         registrationPage.clickRegistrationButtonInNav();
         registrationPage.enterEmail(email);
         registrationPage.enterPassword(password);
@@ -39,6 +39,7 @@ public class RegistrationPageTest extends BasePageTest {
         driver.manage().window().setSize(new Dimension(375, 667));
         registrationPage = new RegistrationPage(driver);
 
+        registrationPage.waitUntilBodyLoad();
         registrationPage.clickOnHamburgerButton();
         registrationPage.clickRegistrationButtonInNav();
         registrationPage.enterEmail(email);
@@ -194,8 +195,12 @@ public class RegistrationPageTest extends BasePageTest {
     @Test
     public void correctRegistrationTest() {
         String expected = "Registration Successful!";
+        registrationPage = new RegistrationPage(driver);
 
-        registrationSteps(email, password, displayName, name, lastName, gender);
+        String randomEmail = RegistrationPage.generateEmail();
+        String randomDisplayName = RegistrationPage.generateDisplayName();
+
+        registrationSteps(randomEmail, password, randomDisplayName, name, lastName, gender);
 
         WebElement getElement = registrationPage.getSuccessfulyRegistrationMessage();
         String actual = getElement.getText();
@@ -205,10 +210,14 @@ public class RegistrationPageTest extends BasePageTest {
 
     @Test
     public void mobileVersionRegistrationTest() {
-
         String expected = "Registration Successful!";
 
-        registrationStepsForMobileVersion(email, password, displayName, name, lastName, gender);
+        registrationPage = new RegistrationPage(driver);
+
+        String randomEmail = RegistrationPage.generateEmail();
+        String randomDisplayName = RegistrationPage.generateDisplayName();
+
+        registrationStepsForMobileVersion(randomEmail, password, randomDisplayName, name, lastName, gender);
 
         WebElement getElement = registrationPage.getSuccessfulyRegistrationMessage();
         String actual = getElement.getText();
