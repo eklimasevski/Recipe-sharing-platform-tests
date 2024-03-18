@@ -3,11 +3,18 @@ package org.example;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//a[normalize-space()='Login']")
     WebElement loginButtonInNav;
+
+    @FindBy(linkText = "Logout")
+    WebElement logoutButton;
 
     @FindBy(css = ".input-group > .invalid-feedback")
     WebElement passwordInputErrorMessage;
@@ -28,7 +35,7 @@ public class LoginPage extends BasePage {
     WebElement emailInLogin;
 
     @FindBy(css = "div[role='alert']")
-    WebElement successfullyLoginAlert;
+    WebElement getSuccessfullyAlert;
 
     @FindBy(className = "login")
     WebElement loginPageErrorMessage;
@@ -38,8 +45,18 @@ public class LoginPage extends BasePage {
 
     @FindBy(className = "navbar-toggler")
     WebElement hamburgerButton;
+
     @FindBy(css = ".btn.btn-outline-secondary > svg")
     WebElement showPassword;
+
+    @FindBy(css = ".container.mt-5.mx-auto > div:nth-of-type(3)")
+    WebElement emailAfterLogout;
+
+    @FindBy(css = ".container.mt-5.mx-auto > div:nth-of-type(4)")
+    WebElement roleAfterLogout;
+
+    @FindBy(className = "text-success")
+    WebElement logoutMessage;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -56,9 +73,12 @@ public class LoginPage extends BasePage {
     public void enterPassword(String password) {
         passwordInput.sendKeys(password);
     }
-    public String getPasswordFieldValue(){return passwordInput.getAttribute("value");}
 
-    public WebElement passwordField(){
+    public String getPasswordFieldValue() {
+        return passwordInput.getAttribute("value");
+    }
+
+    public WebElement passwordField() {
         return passwordInput;
     }
 
@@ -78,8 +98,8 @@ public class LoginPage extends BasePage {
         return emailInLogin.getText();
     }
 
-    public WebElement getSuccessfullyLoginAlert() {
-        return successfullyLoginAlert;
+    public WebElement getSuccessfullyAlert() {
+        return getSuccessfullyAlert;
     }
 
     public String incorrectPaswordOrEmailMessage() {
@@ -94,7 +114,33 @@ public class LoginPage extends BasePage {
         hamburgerButton.click();
     }
 
-    public void clickOnShowPassword(){
+    public void clickOnShowPassword() {
         showPassword.click();
+    }
+
+    public void waitForGetUrl(String url) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlContains(url));
+    }
+
+    public void clickOnLogoutButton() {
+        logoutButton.click();
+    }
+
+    public String getEmailAfterLogout() {
+        return emailAfterLogout.getText();
+    }
+
+    public String getRoleAfterLogout() {
+        return roleAfterLogout.getText();
+    }
+
+    public WebElement getLogoutMessage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.elementToBeClickable(logoutMessage));
+    }
+
+    public String getLogoutMessageText() {
+        return logoutMessage.getText();
     }
 }

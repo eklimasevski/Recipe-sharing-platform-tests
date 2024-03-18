@@ -108,6 +108,7 @@ public class RegistrationPageTest extends BasePageTest {
 
         WebElement errorMessage = registrationPage.genderErrorMessage();
         String actualErrorMessageText = registrationPage.genderErrorMessageText();
+
         Assertions.assertTrue(errorMessage.isDisplayed());
         Assertions.assertEquals(expectedErrorMesage, actualErrorMessageText);
     }

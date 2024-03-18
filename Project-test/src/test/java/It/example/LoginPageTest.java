@@ -6,10 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class LoginPageTest extends BasePageTest {
 
@@ -55,21 +51,21 @@ public class LoginPageTest extends BasePageTest {
 
         loginPage.clickButtonToLogin();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlContains("/login-successful"));
+        loginPage.waitForGetUrl("/login-successful");
 
         String actualUrl = driver.getCurrentUrl();
 
         Assertions.assertEquals(expectedUrl, actualUrl);
         Assertions.assertEquals(email, loginPage.getEmailInLogin().replace("Your email is: ", ""));
-        Assertions.assertTrue(loginPage.getSuccessfullyLoginAlert().isDisplayed(), "Prisijungimo klaida");
+        Assertions.assertTrue(loginPage.getSuccessfullyAlert().isDisplayed(), "Prisijungimo klaida");
     }
 
     @Test
-    void failedLoginTest() {
+    void failedLoginTest() throws InterruptedException {
         String exppectedErrorMessage = "Error: The email or password provided is incorrect.";
 
         loginPageTestSteps("email@gmail.com", password);
+        Thread.sleep(1500);
         Assertions.assertEquals(exppectedErrorMessage, loginPage.incorrectPaswordOrEmailMessage());
     }
 
@@ -85,7 +81,7 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @Test
-    public void mobileVersionRegistrationTest() {
+    public void mobileVersionLoginTest() {
         String expectedUrl = "http://localhost:5173/login-successful";
         driver.manage().window().setSize(new Dimension(375, 667));
         loginPage = new LoginPage(driver);
@@ -93,12 +89,11 @@ public class LoginPageTest extends BasePageTest {
         loginPage.clickOnHamburgerButton();
         loginPageTestSteps(email, password);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlContains("/login-successful"));
+        loginPage.waitForGetUrl("/login-successful");
 
         String actualUrl = driver.getCurrentUrl();
 
-        Assertions.assertTrue(loginPage.getSuccessfullyLoginAlert().isDisplayed(), "Prisijungimo klaida");
+        Assertions.assertTrue(loginPage.getSuccessfullyAlert().isDisplayed(), "Prisijungimo klaida");
         Assertions.assertEquals(expectedUrl, actualUrl);
         Assertions.assertEquals(email, loginPage.getEmailInLogin().replace("Your email is: ", ""));
     }
@@ -117,5 +112,41 @@ public class LoginPageTest extends BasePageTest {
 
         Assertions.assertEquals(expected, actual);
         Assertions.assertTrue(loginPage.passwordField().getAttribute("type").equals("text"));
+    }
+
+    @Test
+    public void mobileVersionLogoutTest() {
+        driver.manage().window().setSize(new Dimension(375, 667));
+
+        String expectedUrl = "http://localhost:5173/";
+        String expectedAlert = "Logout Successful!";
+        loginPage = new LoginPage(driver);
+
+        loginPage.clickOnHamburgerButton();
+        loginPageTestSteps(email, password);
+        loginPage.waitForGetUrl("/login-successful");
+        loginPage.clickOnLogoutButton();
+
+        String actualUrl = driver.getCurrentUrl();
+        String actualAlert = loginPage.getLogoutMessageText();
+
+        Assertions.assertTrue(loginPage.getLogoutMessage().isDisplayed());
+        Assertions.assertEquals(expectedAlert, actualAlert);
+        Assertions.assertEquals(expectedUrl, actualUrl);
+    }
+
+    @Test
+    public void logoutTest() {
+        loginPageTestSteps(email, password);
+        loginPage.waitForGetUrl("/login-successful");
+        loginPage.clickOnLogoutButton();
+
+        String expectedMessage = "Logout Successful!";
+        String expectedUrl = "http://localhost:5173/";
+
+        Assertions.assertTrue(loginPage.getLogoutMessage().isDisplayed());
+        Assertions.assertEquals(expectedMessage, loginPage.getLogoutMessageText());
+        String actualUrl = driver.getCurrentUrl();
+        Assertions.assertEquals(expectedUrl, actualUrl);
     }
 }
