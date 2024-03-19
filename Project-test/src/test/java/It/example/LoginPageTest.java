@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 
 public class LoginPageTest extends BasePageTest {
 
@@ -44,14 +45,14 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @Test
-    void successfulLoginTest() {
-        String expectedUrl = "http://localhost:5173/login-successful";
+    void successfulLoginTest() throws InterruptedException {
+        String expectedUrl = "http://localhost:5173/";
 
         loginPageTestSteps(email, password);
 
         loginPage.clickButtonToLogin();
 
-        loginPage.waitForGetUrl("/login-successful");
+        loginPage.waitForGetUrl("http://localhost:5173/");
 
         String actualUrl = driver.getCurrentUrl();
 
@@ -65,7 +66,7 @@ public class LoginPageTest extends BasePageTest {
         String exppectedErrorMessage = "Error: The email or password provided is incorrect.";
 
         loginPageTestSteps("email@gmail.com", password);
-        Thread.sleep(1500);
+//        Thread.sleep(1500);
         Assertions.assertEquals(exppectedErrorMessage, loginPage.incorrectPaswordOrEmailMessage());
     }
 
@@ -82,7 +83,7 @@ public class LoginPageTest extends BasePageTest {
 
     @Test
     public void mobileVersionLoginTest() {
-        String expectedUrl = "http://localhost:5173/login-successful";
+        String expectedUrl = "http://localhost:5173";
         driver.manage().window().setSize(new Dimension(375, 667));
         loginPage = new LoginPage(driver);
 
@@ -118,9 +119,13 @@ public class LoginPageTest extends BasePageTest {
     public void mobileVersionLogoutTest() {
         driver.manage().window().setSize(new Dimension(375, 667));
 
-        String expectedUrl = "http://localhost:5173/";
+        String expectedUrl = "http://localhost:5173";
         String expectedAlert = "Logout Successful!";
+
         loginPage = new LoginPage(driver);
+
+        WebElement checkButton = loginPage.getRegisterButtonInNav();
+        Assertions.assertFalse(checkButton.isDisplayed());
 
         loginPage.clickOnHamburgerButton();
         loginPageTestSteps(email, password);
@@ -139,10 +144,14 @@ public class LoginPageTest extends BasePageTest {
     public void logoutTest() {
         loginPageTestSteps(email, password);
         loginPage.waitForGetUrl("/login-successful");
+
+       WebElement checkButton = loginPage.getRegisterButtonInNav();
+       Assertions.assertFalse(checkButton.isDisplayed());
+
         loginPage.clickOnLogoutButton();
 
         String expectedMessage = "Logout Successful!";
-        String expectedUrl = "http://localhost:5173/";
+        String expectedUrl = "http://localhost:5173";
 
         Assertions.assertTrue(loginPage.getLogoutMessage().isDisplayed());
         Assertions.assertEquals(expectedMessage, loginPage.getLogoutMessageText());

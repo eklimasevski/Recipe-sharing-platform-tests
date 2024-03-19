@@ -16,8 +16,8 @@ public class BasePageTest {
         driver.manage().window().setSize(new Dimension(1920, 1080));
     }
 
-    @AfterEach
-    void tearDown() {
-        driver.close();
-    }
+//    @AfterEach
+//    void tearDown() {
+//        driver.close();
+//    }
 }

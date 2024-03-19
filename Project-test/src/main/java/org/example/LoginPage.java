@@ -12,6 +12,8 @@ public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//a[normalize-space()='Login']")
     WebElement loginButtonInNav;
+    @FindBy(css = "#navbarNav > div > ul > li:nth-child(2)")
+    WebElement registerButtonInNav;
 
     @FindBy(linkText = "Logout")
     WebElement logoutButton;
@@ -143,4 +145,8 @@ public class LoginPage extends BasePage {
     public String getLogoutMessageText() {
         return logoutMessage.getText();
     }
+
+public WebElement getRegisterButtonInNav(){
+     return registerButtonInNav;
+}
 }
