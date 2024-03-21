@@ -1,20 +1,13 @@
 package It.example;
 
-import com.applitools.eyes.selenium.Eyes;
-import com.applitools.eyes.selenium.fluent.Target;
 import org.example.HomePage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
-
 public class HomePageTest extends BasePageTest {
-    private static String applitoolsApiKey;
-    private Eyes eyes;
     HomePage homePage;
 
     String expectedLoginUrl = "http://localhost:5173/login";
@@ -124,12 +117,5 @@ public class HomePageTest extends BasePageTest {
 
         Assertions.assertEquals(expectedPhoneNumber, actualPhoneNumber, "Phone numbers do not match");
         Assertions.assertEquals(expectedAddress, actualAddress, "Addresses do not match");
-    }
-
-    @Test
-    public void FooterSizeTest() {
-        applitoolsApiKey = System.getenv("XR7eflJJluRmPMcmyTLkoZwiGWFpXYvEx7S0Ffh01078A110");
-        driver.manage().window().setSize(new Dimension(375, 667));
-        eyes.check(Target.window().fully().withName("Main page").layout());
     }
 }

@@ -45,7 +45,7 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @Test
-    void successfulLoginTest() throws InterruptedException {
+    void successfulLoginTest() {
         String expectedUrl = "http://localhost:5173/";
 
         loginPageTestSteps(email, password);
@@ -62,11 +62,11 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @Test
-    void failedLoginTest() throws InterruptedException {
+    void failedLoginTest() {
         String exppectedErrorMessage = "Error: The email or password provided is incorrect.";
 
         loginPageTestSteps("email@gmail.com", password);
-//        Thread.sleep(1500);
+        loginPage.waitForGetUrl("http://localhost:5173/login");
         Assertions.assertEquals(exppectedErrorMessage, loginPage.incorrectPaswordOrEmailMessage());
     }
 
@@ -83,14 +83,14 @@ public class LoginPageTest extends BasePageTest {
 
     @Test
     public void mobileVersionLoginTest() {
-        String expectedUrl = "http://localhost:5173";
+        String expectedUrl = "http://localhost:5173/";
         driver.manage().window().setSize(new Dimension(375, 667));
         loginPage = new LoginPage(driver);
 
         loginPage.clickOnHamburgerButton();
         loginPageTestSteps(email, password);
 
-        loginPage.waitForGetUrl("/login-successful");
+        loginPage.waitForGetUrl("http://localhost:5173/");
 
         String actualUrl = driver.getCurrentUrl();
 
@@ -116,10 +116,10 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @Test
-    public void mobileVersionLogoutTest() {
+    public void mobileVersionLogoutTest() throws InterruptedException {
         driver.manage().window().setSize(new Dimension(375, 667));
 
-        String expectedUrl = "http://localhost:5173";
+        String expectedUrl = "http://localhost:5173/";
         String expectedAlert = "Logout Successful!";
 
         loginPage = new LoginPage(driver);
@@ -129,7 +129,7 @@ public class LoginPageTest extends BasePageTest {
 
         loginPage.clickOnHamburgerButton();
         loginPageTestSteps(email, password);
-        loginPage.waitForGetUrl("/login-successful");
+        loginPage.waitForGetUrl("http://localhost:5173/");
         loginPage.clickOnLogoutButton();
 
         String actualUrl = driver.getCurrentUrl();
@@ -141,17 +141,16 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @Test
-    public void logoutTest() {
+    public void logoutTest() throws InterruptedException {
         loginPageTestSteps(email, password);
-        loginPage.waitForGetUrl("/login-successful");
-
-       WebElement checkButton = loginPage.getRegisterButtonInNav();
-       Assertions.assertFalse(checkButton.isDisplayed());
+        loginPage.waitForGetUrl("http://localhost:5173/");
+        WebElement checkButton = loginPage.getRegisterButtonInNav();
+        Assertions.assertFalse(checkButton.isDisplayed());
 
         loginPage.clickOnLogoutButton();
 
         String expectedMessage = "Logout Successful!";
-        String expectedUrl = "http://localhost:5173";
+        String expectedUrl = "http://localhost:5173/";
 
         Assertions.assertTrue(loginPage.getLogoutMessage().isDisplayed());
         Assertions.assertEquals(expectedMessage, loginPage.getLogoutMessageText());

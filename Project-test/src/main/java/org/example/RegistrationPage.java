@@ -189,7 +189,8 @@ public class RegistrationPage extends BasePage {
 
     public WebElement getSuccessfulyRegistrationMessage() {
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("exampleModalCenterTitle")));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(
+                ".container.mb-4.mt-4 > div[role='dialog'] > div[role='document'] h2#exampleModalCenterTitle")));
     }
 
     public void waitUntilBodyLoad() {

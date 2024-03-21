@@ -12,6 +12,7 @@ public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//a[normalize-space()='Login']")
     WebElement loginButtonInNav;
+
     @FindBy(css = "#navbarNav > div > ul > li:nth-child(2)")
     WebElement registerButtonInNav;
 
@@ -122,7 +123,7 @@ public class LoginPage extends BasePage {
 
     public void waitForGetUrl(String url) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlContains(url));
+        wait.until(ExpectedConditions.urlToBe(url));
     }
 
     public void clickOnLogoutButton() {
@@ -146,7 +147,7 @@ public class LoginPage extends BasePage {
         return logoutMessage.getText();
     }
 
-public WebElement getRegisterButtonInNav(){
-     return registerButtonInNav;
-}
+    public WebElement getRegisterButtonInNav() {
+        return registerButtonInNav;
+    }
 }
