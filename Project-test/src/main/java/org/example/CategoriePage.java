@@ -30,7 +30,7 @@ public class CategoriePage extends BasePage {
     @FindBy(css = "input#password")
     WebElement passwordInput;
 
-    @FindBy(css = "th > .btn.btn-primary")
+    @FindBy(css = "th > .btn.button-add-category")
     WebElement addCategoryButton;
 
     @FindBy(css = "tr:nth-of-type(2)")
@@ -39,17 +39,20 @@ public class CategoriePage extends BasePage {
     @FindBy(css = "input#disabledTextInput")
     WebElement addCategoryInput;
 
-    @FindBy(css = ".modal-dialog.modal-dialog-centered .btn.btn-primary")
+    @FindBy(css = ".modal-dialog.modal-dialog-centered .btn.button-add-category")
     WebElement addButton;
 
     @FindBy(css = "div[role='alert']")
     WebElement addedCategoryAlert;
 
-    @FindBy(css = ".btn.btn-secondary")
+    @FindBy(css = ".btn.button-close")
     WebElement closeButton;
 
     @FindBy(css = ".invalid-feedback")
     WebElement errorMessage;
+
+    @FindBy(css = ".category-name-exists.text-danger")
+    WebElement existNameErrorMessage;
 
     public CategoriePage(WebDriver driver) {
         super(driver);
@@ -136,5 +139,12 @@ public class CategoriePage extends BasePage {
 
     public WebElement getErrorMessage() {
         return errorMessage;
+    }
+
+    public WebElement getExistErrorMessage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(existNameErrorMessage));
+
+        return existNameErrorMessage;
     }
 }

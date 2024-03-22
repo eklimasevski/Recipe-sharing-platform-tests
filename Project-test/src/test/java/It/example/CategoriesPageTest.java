@@ -59,7 +59,7 @@ public class CategoriesPageTest extends BasePageTest {
     }
 
     @Test
-    public void validationTextLessThan4SymbolsTest() {
+    public void validationTestWhenTextLessThan4Symbols() {
         String expected = "Category names must be at least 4 characters long";
 
         addCategory("sad");
@@ -69,10 +69,41 @@ public class CategoriesPageTest extends BasePageTest {
     }
 
     @Test
-    public void validationTextwhenInputEmptyTest() {
+    public void validationTestWhenInputEmpty() {
         String expected = "Please enter category name";
 
         addCategory("");
+
+        String actual = categoriePage.getErrorMessage().getText();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validationTestWhenFirstLetterLowerCase() {
+        String expected =
+                "Category name must start from an uppercase letter and can contain only letters and single whitespaces";
+
+        addCategory("test");
+
+        String actual = categoriePage.getErrorMessage().getText();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validationTestWhenTextWithSpaces() {
+        String expected = "Category Te already exists. Please choose another name";
+
+        addCategory("Te   ");
+
+        String actual = categoriePage.getExistErrorMessage().getText();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validationTestWhenSymbolsMoreThat20() {
+        String expected = "Category names must not be longer than 20 characters";
+
+        addCategory("TestTestTestTestTests");
 
         String actual = categoriePage.getErrorMessage().getText();
         Assertions.assertEquals(expected, actual);
