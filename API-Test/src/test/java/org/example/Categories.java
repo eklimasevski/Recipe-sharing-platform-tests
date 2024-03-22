@@ -92,15 +92,17 @@ public class Categories {
                                 {
                                     "name": "%s"
                                 }
-                                """ .formatted(input))
+                                """
+                                .formatted(input))
                 .contentType(ContentType.JSON)
                 .when()
                 .request("POST", "/categories")
                 .then()
                 .assertThat()
                 .statusCode(400);
-//4-20 symbl, uniq
+        // 4-20 symbl, uniq
     }
+
     @Test
     void whenPostCategoriesExistName_ThenReturn400() {
         given().auth()
@@ -115,8 +117,9 @@ public class Categories {
                 .then()
                 .assertThat()
                 .statusCode(400)
-                .body("message", equalTo("Wrong category name"));
+                .body("message", equalTo("Category with this name already exists"));
     }
+
     @Test
     void whenPostCategoriesWithMoreThat20characters_ThenReturn400() {
         given().auth()
@@ -133,6 +136,7 @@ public class Categories {
                 .statusCode(400)
                 .body("name", equalTo("Name must be from 4 to 20 characters"));
     }
+
     @Test
     void whenPostCategoriesWithLessThat4characters_ThenReturn400() {
         given().auth()
@@ -152,8 +156,7 @@ public class Categories {
 
     @Test
     void whenPostCategoriesWithoutAuth_ThenReturn401() {
-        given()
-                .body("""
+        given().body("""
                 {
                 "name": "Test"
                 }""")
@@ -163,6 +166,23 @@ public class Categories {
                 .then()
                 .assertThat()
                 .statusCode(401);
+    }
+
+    @Test
+    void whenPostCategoriesWhitFirstLowerCase() {
+        given().auth()
+                .basic("Testukas1@gmail.com", "Testukas123!")
+                .body("""
+                {
+                "name": "test"
+                }""")
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/categories")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("name", equalTo("Name must start with an uppercase letter and contain only letters and spaces"));
     }
 
     public void cleanUpDatabase(long id) throws SQLException {
