@@ -1,13 +1,12 @@
-package It.example;
+package It.example.mobile;
 
 import org.example.LoginPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.Dimension;
 
-public class LoginPageTest extends BasePageTest {
+public class LoginPageMobileTest extends BasePageMobileTest {
 
     LoginPage loginPage;
 
@@ -17,6 +16,7 @@ public class LoginPageTest extends BasePageTest {
     public void loginPageTestSteps(String email, String password) {
         loginPage = new LoginPage(driver);
 
+        loginPage.clickOnHamburgerButton();
         loginPage.clickOnLoginButtonInNav();
         loginPage.enterEmail(email);
         loginPage.enterPassword(password);
@@ -74,6 +74,7 @@ public class LoginPageTest extends BasePageTest {
         String expectedUrl = "http://localhost:5173/register";
 
         loginPage = new LoginPage(driver);
+        loginPage.clickOnHamburgerButton();
         loginPage.clickOnLoginButtonInNav();
         loginPage.clickToCreateAccount();
 
@@ -81,27 +82,10 @@ public class LoginPageTest extends BasePageTest {
     }
 
     @Test
-    public void mobileVersionLoginTest() {
-        String expectedUrl = "http://localhost:5173/";
-        driver.manage().window().setSize(new Dimension(375, 667));
-        loginPage = new LoginPage(driver);
-
-        loginPage.clickOnHamburgerButton();
-        loginPageTestSteps(email, password);
-
-        loginPage.waitForGetUrl("http://localhost:5173/");
-
-        String actualUrl = driver.getCurrentUrl();
-
-        Assertions.assertTrue(loginPage.getSuccessfullyAlert().isDisplayed(), "Prisijungimo klaida");
-        Assertions.assertEquals(expectedUrl, actualUrl);
-        Assertions.assertEquals(email, loginPage.getEmailInLogin().replace("Your email is: ", ""));
-    }
-
-    @Test
     public void showingPasswordTest() {
         loginPage = new LoginPage(driver);
 
+        loginPage.clickOnHamburgerButton();
         loginPage.clickOnLoginButtonInNav();
         loginPage.enterEmail(email);
         loginPage.enterPassword(password);
@@ -118,9 +102,11 @@ public class LoginPageTest extends BasePageTest {
     public void logoutTest() {
         loginPage = new LoginPage(driver);
 
+        loginPage.clickOnHamburgerButton();
         String buttonTextBefore = loginPage.getRegisterButtonInNav().getText();
         Assertions.assertEquals("Register", buttonTextBefore);
 
+        loginPage.clickOnHamburgerButton();
         loginPageTestSteps(email, password);
 
         loginPage.waitForGetUrl("http://localhost:5173/");

@@ -100,7 +100,6 @@ public class Categories {
                 .then()
                 .assertThat()
                 .statusCode(400);
-        // 4-20 symbl, uniq
     }
 
     @Test

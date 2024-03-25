@@ -54,6 +54,9 @@ public class CategoriePage extends BasePage {
     @FindBy(css = ".category-name-exists.text-danger")
     WebElement existNameErrorMessage;
 
+    @FindBy(className = "navbar-toggler")
+    WebElement hamburgerButton;
+
     public CategoriePage(WebDriver driver) {
         super(driver);
     }
@@ -146,5 +149,9 @@ public class CategoriePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOf(existNameErrorMessage));
 
         return existNameErrorMessage;
+    }
+
+    public void clickOnHamburgerButton() {
+        hamburgerButton.click();
     }
 }
