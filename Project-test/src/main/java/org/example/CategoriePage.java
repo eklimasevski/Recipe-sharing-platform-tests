@@ -1,5 +1,6 @@
 package org.example;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,6 +42,9 @@ public class CategoriePage extends BasePage {
 
     @FindBy(css = ".modal-dialog.modal-dialog-centered .btn.button-add-category")
     WebElement addButton;
+
+    @FindBy(xpath = "//button[@class='btn button-add-category']")
+    WebElement addButtonXpath;
 
     @FindBy(css = "div[role='alert']")
     WebElement addedCategoryAlert;
@@ -141,17 +145,21 @@ public class CategoriePage extends BasePage {
     }
 
     public WebElement getErrorMessage() {
-        return errorMessage;
-    }
-
-    public WebElement getExistErrorMessage() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(existNameErrorMessage));
-
-        return existNameErrorMessage;
+        return wait.until(ExpectedConditions.visibilityOf(errorMessage));
     }
 
     public void clickOnHamburgerButton() {
         hamburgerButton.click();
     }
+
+    public WebElement getAddButton() {
+        WebElement selector = driver.findElement(By.xpath("//button[@class='btn button-add-category']"));
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(selector));
+        return selector;
+
+    }
+
 }

@@ -183,6 +183,23 @@ public class Categories {
                 .statusCode(400)
                 .body("name", equalTo("Name must start with an uppercase letter and contain only letters and spaces"));
     }
+    @ParameterizedTest
+    @CsvFileSource(resources = "/OffensiveWords")
+    public void offensiveWordsTest(String input){
+        given().auth()
+                .basic("Testukas1@gmail.com", "Testukas123!")
+                .body("""
+                {
+                "name": "%s"
+                }""" .formatted(input))
+                .contentType(ContentType.JSON)
+                .when()
+                .request("POST", "/categories")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("name", equalTo("Category name cannot contain offensive words"));
+    }
 
     public void cleanUpDatabase(long id) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/rsp", "sa", "123456");

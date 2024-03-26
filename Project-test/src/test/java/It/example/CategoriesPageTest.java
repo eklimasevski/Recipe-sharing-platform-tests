@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 
 public class CategoriesPageTest extends BasePageTest {
 
@@ -36,22 +38,6 @@ public class CategoriesPageTest extends BasePageTest {
         categoriePage.clickAddButton();
     }
 
-    public void loginStepsForMobile() {
-        driver.manage().window().setSize(new Dimension(375, 667));
-
-        categoriePage = new CategoriePage(driver);
-        categoriePage.clickOnHamburgerButton();
-        loginSteps(email, password);
-    }
-
-    public void addCategoryStepsForMobile(String category) {
-        driver.manage().window().setSize(new Dimension(375, 667));
-
-        categoriePage = new CategoriePage(driver);
-        categoriePage.clickOnHamburgerButton();
-        addCategorySteps(category);
-    }
-
     @ParameterizedTest
     @CsvFileSource(resources = "/Categories")
     public void checkCategoriesTest(String input) {
@@ -76,7 +62,7 @@ public class CategoriesPageTest extends BasePageTest {
 
     @Test
     public void validationTestWhenTextLessThan4Symbols() {
-        String expected = "Category names must be at least 4 characters long";
+        String expected = "Category name must be at least 4 characters long";
 
         addCategorySteps("sad");
 
@@ -107,17 +93,17 @@ public class CategoriesPageTest extends BasePageTest {
 
     @Test
     public void validationTestWhenTextWithSpaces() {
-        String expected = "Category Te already exists. Please choose another name";
+        String expected = "Name must start with an uppercase letter and contain only letters and spaces";
 
         addCategorySteps("Te   ");
 
-        String actual = categoriePage.getExistErrorMessage().getText();
+        String actual = categoriePage.getErrorMessage().getText();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void validationTestWhenSymbolsMoreThat20() {
-        String expected = "Category names must not be longer than 20 characters";
+        String expected = "Category name must not be longer than 20 characters";
 
         addCategorySteps("TestTestTestTestTests");
 
@@ -126,60 +112,29 @@ public class CategoriesPageTest extends BasePageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/Categories")
-    public void checkCategoriesOnMobileTest(String input) {
+    @CsvFileSource(resources = "/CategoriesOffensiveWords")
+    public void offensiveWordsTest(String input) {
+        String expected = "Display name contains offensive words!";
 
-        loginStepsForMobile();
+        loginSteps(email, password);
 
-        boolean isTextFound = categoriePage.searchingText(input);
-        Assertions.assertTrue(isTextFound);
-    }
-
-    @Test
-    public void validationTestWhenTextLessThan4SymbolsOnMobile() {
-        String expected = "Category names must be at least 4 characters long";
-
-        addCategoryStepsForMobile("sad");
-
+        categoriePage.clickAddCategoriesButton();
+        categoriePage.enterCategory(input);
+        categoriePage.clickAddButton();
         String actual = categoriePage.getErrorMessage().getText();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void validationTestWhenInputEmptyOnMobile() {
-        String expected = "Please enter category name";
+    public void setCategoriePageTestWithoutAdmin() {
+        String email = "Testukas123@gmail.com";
+        String password = "Testukas123!";
+        loginSteps(email, password);
 
-        addCategoryStepsForMobile("");
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            categoriePage.getAddButton();
+        });
 
-        String actual = categoriePage.getErrorMessage().getText();
-        Assertions.assertEquals(expected, actual);
-    }
 
-    @Test
-    public void validationTestWhenFirstLetterLowerCaseOnMobile() {
-        String expected =
-                "Category name must start from an uppercase letter and can contain only letters and single whitespaces";
-        addCategoryStepsForMobile("test");
-
-        String actual = categoriePage.getErrorMessage().getText();
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void validationTestWhenTextWithSpacesOnMobile() {
-        String expected = "Category Te already exists. Please choose another name";
-        addCategoryStepsForMobile("Te   ");
-
-        String actual = categoriePage.getExistErrorMessage().getText();
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void validationTestWhenSymbolsMoreThat20onMobile() {
-        String expected = "Category names must not be longer than 20 characters";
-        addCategoryStepsForMobile("TestTestTestTestTests");
-
-        String actual = categoriePage.getErrorMessage().getText();
-        Assertions.assertEquals(expected, actual);
     }
 }
