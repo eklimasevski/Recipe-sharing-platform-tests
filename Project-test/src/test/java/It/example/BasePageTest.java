@@ -1,6 +1,5 @@
 package It.example;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -16,8 +15,8 @@ public class BasePageTest {
         driver.manage().window().setSize(new Dimension(1920, 1080));
     }
 
-    @AfterEach
-    void tearDown() {
-        driver.close();
-    }
+    //    @AfterEach
+    //    void tearDown() {
+    //        driver.close();
+    //    }
 }
