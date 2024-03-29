@@ -116,7 +116,7 @@ public class Categories {
                 .then()
                 .assertThat()
                 .statusCode(400)
-                .body("message", equalTo("Category with this name already exists"));
+                .body("name", equalTo("Category with this name already exists"));
     }
 
     @Test

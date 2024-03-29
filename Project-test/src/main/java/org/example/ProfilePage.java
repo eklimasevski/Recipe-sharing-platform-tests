@@ -3,6 +3,7 @@ package org.example;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -33,7 +34,7 @@ public class ProfilePage extends BasePage {
     @FindBy(id = "confirmPassword")
     WebElement confirmPassword;
 
-    @FindBy(css = "form > .btn.btn-primary")
+    @FindBy(css = "form > .btn.button-login")
     WebElement loginButton;
 
     @FindBy(css = "li:nth-of-type(3) > .nav-link")
@@ -42,7 +43,7 @@ public class ProfilePage extends BasePage {
     @FindBy(css = "select[name='gender']")
     WebElement genderSelector;
 
-    @FindBy(css = ".btn.btn-primary")
+    @FindBy(css = ".btn.btn-primary.button-update-user.text-dark")
     WebElement updateButton;
 
     @FindBy(id = "picture")
@@ -57,10 +58,12 @@ public class ProfilePage extends BasePage {
     }
 
     public void enterEmail(String email) {
+        emailInput.clear();
         emailInput.sendKeys(email);
     }
 
     public void enterPassword(String password) {
+        passwordInput.clear();
         passwordInput.sendKeys(password);
     }
 
@@ -75,14 +78,17 @@ public class ProfilePage extends BasePage {
     }
 
     public void enterDisplayName(String name) {
+        displayName.clear();
         displayName.sendKeys(name);
     }
 
     public void enterLastName(String name) {
+        lastName.clear();
         lastName.sendKeys(name);
     }
 
     public void enterFirstName(String name) {
+        firstName.clear();
         firstName.sendKeys(name);
     }
 
@@ -96,7 +102,8 @@ public class ProfilePage extends BasePage {
     }
 
     public void clickUpdateButton() {
-        updateButton.click();
+        Actions actions = new Actions(driver);
+        actions.moveToElement(updateButton).click().perform();
     }
 
     public void upldoadPhoto(String path) {

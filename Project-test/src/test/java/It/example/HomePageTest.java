@@ -39,16 +39,19 @@ public class HomePageTest extends BasePageTest {
         Assertions.assertEquals(expectedHomeUrl, actualUrl);
 
         // Tikrina, ar mygtukas mus nuvedė į kitą puslapį.
+        homePage.clickOnNavButton();
         homePage.clickOnRegister();
         String actualRegisterUrl = driver.getCurrentUrl();
         Assertions.assertEquals(expectedRegisterUrl, actualRegisterUrl);
 
         // Tikrina, ar mygtukas mus nuvedė į kitą puslapį.
+        homePage.clickOnNavButton();
         homePage.clickOnLogin();
         String actualLoginUrl = driver.getCurrentUrl();
         Assertions.assertEquals(expectedLoginUrl, actualLoginUrl);
 
         // Tikrina ar mygtuku tekstas yra toks koks turi būti
+        homePage.clickOnNavButton();
         Assertions.assertEquals(homeButtonText, homePage.getHomeButtonText());
         Assertions.assertEquals(registerButtonText, homePage.getRegisterButtonText());
         Assertions.assertEquals(loginButtonText, homePage.getLoginButtonText());
@@ -104,10 +107,8 @@ public class HomePageTest extends BasePageTest {
         String actualLoginUrl = driver.getCurrentUrl();
         Assertions.assertEquals(expected, actualLoginUrl);
 
-        WebElement phoneNumberElement =
-                driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(4)"));
-        WebElement addressElement =
-                driver.findElement(By.cssSelector(".col-lg-3.col-md-4.col-sm-12 > p:nth-of-type(2)"));
+        WebElement phoneNumberElement = driver.findElement(By.xpath("//li[.='+370 5 269 7455']"));
+        WebElement addressElement = driver.findElement(By.xpath("//li[.='Trinapolio g. 2, Vilnius']"));
 
         String actualPhoneNumber = phoneNumberElement.getText();
         String actualAddress = addressElement.getText();

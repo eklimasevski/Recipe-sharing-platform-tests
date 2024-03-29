@@ -26,7 +26,7 @@ public class LoginPage extends BasePage {
     @FindBy(css = "form > div:nth-of-type(1) > .invalid-feedback")
     WebElement emailInputErrorMessage;
 
-    @FindBy(css = "form > .btn.btn-primary")
+    @FindBy(css = "form > .btn.button-login")
     WebElement loginButton;
 
     @FindBy(id = "email")

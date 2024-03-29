@@ -19,7 +19,7 @@ public class CategoriePage extends BasePage {
     @FindBy(linkText = "Login")
     WebElement loginButtonInNav;
 
-    @FindBy(css = "form > .btn.btn-primary")
+    @FindBy(css = "form > .btn.button-login")
     WebElement buttonToLogin;
 
     @FindBy(css = "tr > th")
@@ -159,7 +159,5 @@ public class CategoriePage extends BasePage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(selector));
         return selector;
-
     }
-
 }

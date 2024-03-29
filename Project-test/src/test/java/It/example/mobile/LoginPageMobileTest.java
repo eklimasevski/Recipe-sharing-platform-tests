@@ -110,6 +110,7 @@ public class LoginPageMobileTest extends BasePageMobileTest {
         loginPageTestSteps(email, password);
 
         loginPage.waitForGetUrl("http://localhost:5173/");
+        loginPage.clickOnHamburgerButton();
         String buttonTextAfter = loginPage.getRegisterButtonInNav().getText();
         Assertions.assertEquals("Categories", buttonTextAfter);
 

@@ -35,10 +35,16 @@ public class ProfilePageTest extends BasePageTest {
     }
 
     @Test
-    void updateWithoutPhoto() {
+    void successfulUpdateWithoutPhoto() {
+        String expectedAlertMessage = "Profile update successful!";
         updateProfileSteps(email, password);
         fieldInput(email, password, name, name, name, gender);
         profilePage.clickUpdateButton();
+
+        String actualAletMessage =
+                profilePage.getSuccessfulyRegistrationMessage().getText();
+
+        Assertions.assertEquals(expectedAlertMessage, actualAletMessage);
     }
 
     @Test
@@ -51,6 +57,7 @@ public class ProfilePageTest extends BasePageTest {
         profilePage.enterPasswordConfirm(password);
 
         profilePage.upldoadPhoto("\\src\\test\\resources\\test1.jpg");
+
         profilePage.clickUpdateButton();
         String actualAletMessage =
                 profilePage.getSuccessfulyRegistrationMessage().getText();

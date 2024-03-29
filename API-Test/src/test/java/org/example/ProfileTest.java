@@ -160,7 +160,7 @@ public class ProfileTest {
     }
 
     @Test
-    void whenPutProfileWithNotExistId_ThenReturn401andBody() {
+    void whenPutProfileWithNotExistId_ThenReturn400andBody() {
         given().auth()
                 .basic("Testukas1234@gmail.com", "Testukas123!")
                 .contentType("multipart/form-data")
@@ -184,8 +184,8 @@ public class ProfileTest {
                 .assertThat()
                 .log()
                 .all()
-                .statusCode(401)
-                .body("error", equalTo("User is not authorized to update this user."));
+                .statusCode(400)
+                .body("error", equalTo("User you are trying to update does not exist in database."));
     }
 
     @Test

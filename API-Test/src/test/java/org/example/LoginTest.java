@@ -17,7 +17,7 @@ public class LoginTest {
                         """
                                 {
                                     "email": "Testukas1@gmail.com",
-                                        "password": "aA1=ddr"
+                                        "password": "Testukas123!"
                                 }
                                 """)
                 .contentType(ContentType.JSON)
@@ -30,21 +30,21 @@ public class LoginTest {
                 .statusCode(200)
                 .body(
                         "id",
-                        equalTo(623),
+                        equalTo(100),
                         "email",
                         equalTo("Testukas1@gmail.com"),
                         "displayName",
-                        equalTo("Test1"),
+                        equalTo("Test"),
                         "firstName",
-                        equalTo("Testukas"),
-                        "lastName",
                         equalTo("Testas"),
+                        "lastName",
+                        equalTo("Testukas"),
                         "gender",
                         equalTo("Male"),
                         "username",
                         equalTo("Testukas1@gmail.com"),
                         "role",
-                        equalTo("ROLE_USER"));
+                        equalTo("ROLE_ADMIN"));
     }
 
     @Test

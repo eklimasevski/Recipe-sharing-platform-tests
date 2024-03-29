@@ -22,7 +22,7 @@ public class RegisterTest {
         Response response = given().body(
                         """
                                 {
-                                    "displayName": "Test",
+                                    "displayName": "Testas2",
                                     "email": "Testukas@gmail.com",
                                     "password": "aA1=ddr",
                                     "firstName": "Testukas",
@@ -40,7 +40,7 @@ public class RegisterTest {
                 .statusCode(201)
                 .body(
                         "displayName",
-                        equalTo("Test"),
+                        equalTo("Testas2"),
                         "email",
                         equalTo("Testukas@gmail.com"),
                         "firstName",
@@ -243,8 +243,8 @@ public class RegisterTest {
         Response response = given().body(
                         """
                 {
-                "displayName": "Test",
-                "email": "Testukas@gmail.com",
+                "displayName": "Test2",
+                "email": "Testukas2@gmail.com",
                 "password": "%s",
                 "firstName": "Tetukas",
                 "lastName": "Testas",

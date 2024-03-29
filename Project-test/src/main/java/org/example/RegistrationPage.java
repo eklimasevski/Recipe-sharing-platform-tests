@@ -38,7 +38,7 @@ public class RegistrationPage extends BasePage {
     @FindBy(css = "select[name='gender']")
     WebElement genderSelector;
 
-    @FindBy(css = ".btn.btn-primary")
+    @FindBy(css = ".btn.button-register")
     WebElement submitButton;
 
     @FindBy(css = "div:nth-of-type(1) > .invalid-feedback")
