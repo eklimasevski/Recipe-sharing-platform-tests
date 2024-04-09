@@ -17,8 +17,8 @@ public class BasePageTest {
         //        driver.manage().window().maximize();
     }
 
-    @AfterEach
-    void tearDown() {
-        driver.close();
-    }
+//    @AfterEach
+//    void tearDown() {
+//        driver.close();
+//    }
 }

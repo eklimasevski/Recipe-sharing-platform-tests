@@ -48,6 +48,8 @@ public class ProfilePage extends BasePage {
 
     @FindBy(id = "picture")
     WebElement fileInput;
+    @FindBy(css = ".invalid-feedback")
+    WebElement errorMessage;
 
     public ProfilePage(WebDriver driver) {
         super(driver);
@@ -115,5 +117,10 @@ public class ProfilePage extends BasePage {
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(
                 ".container.mb-4.mt-4 > div[role='dialog'] > div[role='document'] h2#exampleModalCenterTitle")));
+    }
+    public String getErrorMessage(){
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".invalid-feedback")));
+        return errorMessage.getText();
     }
 }

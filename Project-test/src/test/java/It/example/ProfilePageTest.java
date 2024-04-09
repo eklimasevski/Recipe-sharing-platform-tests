@@ -1,5 +1,6 @@
 package It.example;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.example.ProfilePage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -63,5 +64,69 @@ public class ProfilePageTest extends BasePageTest {
                 profilePage.getSuccessfulyRegistrationMessage().getText();
 
         Assertions.assertEquals(expectedAlertMessage, actualAletMessage);
+    }
+
+    @Test
+    void displayNameFielValidationTest() {
+
+        String expected = "User with this display name already exists.";
+
+        updateProfileSteps(email, password);
+
+        profilePage.enterPassword(password);
+        profilePage.enterPasswordConfirm(password);
+
+        profilePage.enterDisplayName("Test");
+
+        profilePage.upldoadPhoto("\\src\\test\\resources\\test1.jpg");
+
+        profilePage.clickUpdateButton();
+
+        String actual = profilePage.getErrorMessage();
+
+        Assertions.assertEquals(expected, actual);
+
+    }
+
+    @Test
+    void emailFielValidationTest() {
+
+        String expected = "User with this email already exists.";
+
+        updateProfileSteps(email, password);
+
+        profilePage.enterPassword(password);
+        profilePage.enterPasswordConfirm(password);
+
+        profilePage.enterEmail("Testukas123@gmail.com");
+
+        profilePage.upldoadPhoto("\\src\\test\\resources\\test1.jpg");
+
+        profilePage.clickUpdateButton();
+
+        String actual = profilePage.getErrorMessage();
+
+        Assertions.assertEquals(expected, actual);
+
+    }
+    @Test
+    void passwordFielValidationTest(){
+
+        String expected = "The passwords do not match!";
+
+        updateProfileSteps(email,password);
+
+        profilePage.enterPassword(password);
+        profilePage.enterPasswordConfirm("Testukas123");
+        
+
+        profilePage.upldoadPhoto("\\src\\test\\resources\\test1.jpg");
+
+        profilePage.clickUpdateButton();
+
+        String actual = profilePage.getErrorMessage();
+
+        Assertions.assertEquals(expected,actual);
+
     }
 }
